@@ -1,3 +1,0 @@
-This chapter contains mainly configurations.
-Some executions are directly executed in a python terminal.
-the first program is coded (hello_world.py)

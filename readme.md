@@ -16,7 +16,7 @@ This project is based on the book "Python Crash Course" by "Eric Matthes", and i
   * Variables
   * Strings
 
-<br> <b>Part II</b>: Projectsx
+<br> <b>Part II</b>: Projects
 
 ---
 #### Title: Python Crash Course
