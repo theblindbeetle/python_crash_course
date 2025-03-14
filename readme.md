@@ -10,11 +10,12 @@ This project is based on the book "Python Crash Course" by "Eric Matthes", and i
   * Running a Hello World Program
   * Troubleshooting
   * Running Python Programs from a Terminal
-  * Summar
+  * Summary
 * Chapter 2: Variables and Simple Data Types
   * What Really Happens When You Run hello_world.py
   * Variables
   * Strings
+  * Numbers
 
 <br> <b>Part II</b>: Projects
 
