@@ -1,11 +1,24 @@
-# What Really Happens When You Run hello_world.py
-General explanation of how the interpreter works
+# Chapter 2: Variables and Simple Data Types
+### In this chapter you’ll learn about the different kinds of data you can work with in your Python programs. You’ll also learn how to use variables to represent data in your programs.
+
+---
+## What Really Happens When You Run hello_world.py
+When you run a python a file like `hello_world.py` containing:
+```commandline
+print("Hello Python world!")
+Hello Python world!
+```
+The ending <i>.py</i> indicates is a Python program.<br>
+The editor runs the file with the <i>Python interpreter</i> and determine what will happen with each word written in the program.
 
 ---
 ## Variables:
-Explanation of variable assignation.
+Let’s try using a variable in hello_world.py. Add a new line at the beginning
+of the file, and modify the second line:
 ```commandline
+# REFER TO: hellow_world.py
 message = "test"
+print(message)
 ```
 
 ### Naming and Using Variables:
@@ -32,7 +45,7 @@ Talks about mistakes when naming, like creating the variable 'message' and call 
 >>> print(mesage)
 test message 1
 ```
-### Variables and Labels:
+### Variables are Labels:
 Describes that variables are not containers, but they can be seen as labels assigned to values.
 
 ---
@@ -210,3 +223,56 @@ Python doesn't have a built-in constant types, even though, programmers use it a
 ```commandline
 MAX_CONNECTIONS = 5000
 ```
+
+---
+## Comments
+<sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
+In previous examples probably comments are not necessary.
+But, while the program gets longer and more difficult to understand, comments become very useful.
+A comment allows you to write notes in English within your programs.
+
+### How Do You Write Comments?
+<sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
+A hash mark (#) indicates a comment.
+anything after that is ignored by the Python interpreter. For example
+```commandline
+# Say hello to everyone.
+print("Hello Python people!")
+```
+Python ignores the first line and execute the second one.
+```commandline
+Hello Python people!
+```
+
+### What Kind of Comments Should You Write?
+<sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
+The main purpose to write a comment is to explain what the code is supposed to do and how it works.<br>
+If you leave for a while a project, you may forget the code, 
+so making good comments can save you time by figuring out easier how it works.<br>
+<br>
+Consider making meaningful comments so they are helpful for you future you and other programmers.<br>
+And remember is much easier to delete extra comments later on
+than it is to go back and write comments for a sparsely commented program.
+
+
+---
+## The Zen of Python
+There are many ways of programming, but a good guidance of doing it well is by following "The Zen of Python".<br>
+You can execute the following line to see the entire message.
+```commandline
+>>> import this
+The Zen of Python, by Tim Peters
+Beautiful is better than ugly.
+```
+
+---
+## Summary
+In this chapter you learned to work with variables. You learned to use descriptive variable names and how to resolve name errors and syntax errors when
+they arise. You learned what strings are and how to display strings using lowercase, uppercase, and title case. You started using whitespace to organize output neatly, and you learned to strip unneeded whitespace from different parts
+of a string. You started working with integers and floats, and learned some of
+the ways you can work with numerical data. You also learned to write explanatory comments to make your code easier for you and others to read. Finally,
+you read about the philosophy of keeping your code as simple as possible,
+whenever possible.<br>
+In Chapter 3 you’ll learn to store collections of information in data
+structures called lists. You’ll learn to work through a list, manipulating any
+information in that list.
