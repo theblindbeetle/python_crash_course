@@ -298,3 +298,114 @@ Here's the output:
 
 A Ducati is too expensive for me.
 ```
+
+## Organizing a List
+Python provides a number of different ways to organize your lists, depending on the situation.
+
+### Storing a List Permanently with the sort() Method
+In the following example you'll see a list alphabetically disordered.<br>
+This way sorts the list by changing its order permanently.
+```commandline
+# REFER: cars.py
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+cars.sort()
+print(cars)
+```
+the output after using the method is an ordered list:
+```commandline
+['audi', 'bmw', 'subaru', 'toyota']
+```
+you can also sort the list backwards:
+```commandline
+# REFER: cars2.py
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+cars.sort(reverse=True)
+print(cars)
+```
+the output:
+```commandline
+['toyota', 'subaru', 'bmw', 'audi']
+```
+
+### Sorting a List Temporarily with the sorted() Function
+Using this method just shows the list sorted, but it doesn't modify it.
+```commandline
+# REFER: cars3.py
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+print(f"Original list:{cars}")
+print(f"Sorted list:{sorted(cars)}")
+print(f"Original list:{cars}")
+```
+the output:
+```commandline
+Original list:['bmw', 'audi', 'toyota', 'subaru']
+Sorted list:['audi', 'bmw', 'subaru', 'toyota']
+Original list:['bmw', 'audi', 'toyota', 'subaru']
+```
+The list still exist in the original order, even when sorted() has been used.
+This method also accepts `reverse=True`
+> NOTE: when not all the values are in lowercase, it is mor complicated to sort alphabetically.
+
+### Printing a List in Reverse Order
+The method reverse() does not order alphabetically backwards, it just backwards the current order of the list.
+```commandline
+# REFER: cars4.py
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+print(f"Original list:{cars}")
+cars.reverse()
+print(f"Reversed list:{cars}")
+```
+the output:
+```commandline
+Original list:['bmw', 'audi', 'toyota', 'subaru']
+Reversed list:['subaru', 'toyota', 'audi', 'bmw']
+```
+Important to mention that this method modifies permanently the order of the list. But if required, reverse it again would change it to the original order.
+
+### Finding the Lenght of a List
+The method len(), with a list returns the number of items in that list.
+```commandline
+>>> cars = ['bmw', 'audi', 'toyota', 'subaru']
+>>> len(cars)
+4
+```
+
+## Avoiding Index Errors When Working with Lists
+A common error is when work with lists for the first time is like you have a list with three items, and you ask for the fourth one:
+```commandline
+# REFER: motorcycles3.4.py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles[3])
+```
+This results in error:
+```commandline
+Traceback (most recent call last):
+  File "motorcycles.py", line 2, in <module>
+    print(motorcycles[3])
+          ~~~~~~~~~~~^^^
+IndexError: list index out of range
+```
+Python tries to get the item in the index 3, but there are just up to 2 ([0, 1, 2]).<br>
+Keep in mind that whenever you want to access the last item you can use [-1].
+```commandline
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles[-1])
+```
+the output:
+```commandline
+suzuki
+```
+The only way to get an error with this approach is that the list is empty
+```commandline
+motorcycles = []
+print(motorcycles[-1])
+```
+the output:
+```commandline
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+IndexError: list index out of range
+```
+
+> NOTE: When an index error occurs you can have a good hint by printing the list.
+
