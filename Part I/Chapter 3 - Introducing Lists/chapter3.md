@@ -299,6 +299,7 @@ Here's the output:
 A Ducati is too expensive for me.
 ```
 
+---
 ## Organizing a List
 Python provides a number of different ways to organize your lists, depending on the situation.
 
@@ -370,6 +371,7 @@ The method len(), with a list returns the number of items in that list.
 4
 ```
 
+---
 ## Avoiding Index Errors When Working with Lists
 A common error is when work with lists for the first time is like you have a list with three items, and you ask for the fourth one:
 ```commandline

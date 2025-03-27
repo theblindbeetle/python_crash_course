@@ -9,7 +9,7 @@
 √  Use reverse() to change the order of your list. Print the list to show that its order has changed.
 √  Use reverse() to change the order of your list again. Print the list to show it’s back to its original order.
 √  Use sort() to change your list so it’s stored in alphabetical order. Print the list to show that its order has been changed.
-•  Use sort() to change your list so it’s stored in reverse alphabetical order. Print the list to show that its order has changed.
+√  Use sort() to change your list so it’s stored in reverse alphabetical order. Print the list to show that its order has changed.
 """
 # Create list
 places = ['Kilimanjaro', 'Toscana', 'Greenland', 'Antartica', 'Sahara']
