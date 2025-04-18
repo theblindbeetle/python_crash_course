@@ -233,6 +233,223 @@ particular condition that is important in your program.
 
 ---
 ## 5.3 `if` Statement
+Several different kinds of if statements exist, and your choice of which to
+use depends on the number of conditions you need to test.
+
+### 5.3.1 Simple `if` Statement
+The simples kind of `if` statement has one test and one action:
+```commandline
+if conditional_test:
+    do something
+```
+You can put any conditional test in the first line and just about any
+action in the indented block following the test.
+If the conditional test
+evaluates to True, Python executes the code following the if statement.
+If the test evaluates to False, Python ignores the code following the if
+statement.
+Let's verify if a person is old enough to vote:
+```commandline
+# REFER: Chapter 5.../5.3.if_statement/voting.py
+age = 19
+if age >= 18:
+    print("You are old enough to vote!")
+```
+The output:
+```commandline
+You are old enough to vote!
+```
+Indentation plays the same role in if statements as it did in for loops.
+You can have as many lines of code as you want in the block following the if 
+statement; e.g.:
+```commandline
+age = 19
+if age >= 18:
+print("You are old enough to vote!")
+print("Have you registered to vote yet?")
+```
+The conditional test passes, and both print() calls are indented, so both
+lines are printed:
+```commandline
+You are old enough to vote!
+Have you registered to vote yet?
+```
+
+### 5.3.2 `if-else` Statement
+If you want to take one action when a test passes and a different action in all
+other cases. Python’s if-else syntax makes this possible.
+
+We’ll display the same message we had previously if the person is old
+enough to vote, but this time we’ll add a message for anyone who is not
+old enough to vote:
+```commandline
+age = 17
+if age >= 18:
+    print("You are old enough to vote!")
+    print("Have you registred to vote yet?")
+else:
+    print("Sorry, you are too young to vote.")
+    print("Please registre to vote as soon as you turn 18!")
+```
+the output:
+```commandline
+Sorry, you are too young to vote.
+Please register to vote as soon as you turn 18!
+```
+The if-else structure works well in situations in which you want Python to
+always execute one of two possible actions. In a simple if-else chain like this,
+one of the two actions will always be executed.
+
+### 5.3.3 `if-else` Statement
+Often, you’ll need to test more than two possible situations, and to evaluate
+these you can use Python’s if-elif-else syntax. Python executes only one
+block in an if-elif-else chain. It runs each conditional test in order until
+one passes. When a test passes, the code following that test is executed and
+Python skips the rest of the tests.
+
+For example, consider an amusement park that charges different rates for
+different age groups:
+* Admission for anyone under age 4 is free.
+* Admission for anyone between the ages of 4 and 18 is \$25.
+* Admission for anyone age 18 or older is \$40.
+
+How can we use an if statement to determine a person’s admission rate?
+The following code tests for the age group of a person and then prints an
+admission price message:
+```commandline
+# REFER: ../5.3.3.../amusement_park.py
+age = 12
+
+if age < 4:
+    print("Your admission cost is $0.")
+elif age < 18:
+    print("Your admission cost is $25.")
+else:
+    print("Your admission cost is $40.")
+```
+Let's brake it:
+consider age is 12; 
+First conditional ask if age is under 4, and it is not. So, it goes to the 
+following statement not indented.
+<br>Second conditional ask if age is under 18, and it is. So, it goes into the 
+block of code under this conditional, which, in this case is just one line.
+<br>Ignore the rest of the conditions, sin one is already accomplished and there
+is no need to go to any other linked condition.
+<br>The output:
+```commandline
+Your admission cost is $25.
+```
+Any age greater than 17 would cause the first two tests to fail. In these
+situations, the else block would be executed and the admission price would
+be $40.
+
+Rather than printing the admission price within the if-elif-else block,
+it would be more concise to set just the price inside the if-elif-else chain
+and then have a simple print() call that runs after the chain has been
+evaluated:
+```commandline
+age = 12
+
+if age < 4:
+    price = 0
+elif age < 18:
+    price = 25
+else:
+    price = 40
+print(f"Your admission cost is ${price}.)
+```
+
+### 5.3.4 Using Multiple `elif` Blocks
+It's the same principle, while more conditions is needed to link to the main if
+the most `elif` you aggregate to the conditional blocks.
+```commandline
+age = 12
+
+if age < 4:
+    price = 0
+elif age < 18:
+    price = 25
+elif age < 65:
+    price = 40
+else:
+    price = 20
+
+print(f"Your admission cost is ${price}.)
+```
+
+### 5.3.5 Omitting the `else` block
+Python does not require an else block at the end of an if-elif chain.
+Just adapt to it, sometimes is better an `else` block, others an `elif`.
+```commandline
+age = 12
+
+if age < 4:
+    price = 0
+elif age < 18:
+    price = 25
+elif age < 65:
+    price = 40
+elif age >=65:
+    price = 20
+    
+print(f"Your admission cost is ${price}.)
+```
+The else block is a catchall statement. It matches any condition that
+wasn’t matched by a specific if or elif test, and that can sometimes include
+invalid or even malicious data. If you have a specific final condition you are
+testing for, consider using a final elif block and omit the else block. 
+
+### 5.3.6 Testing Multiple Conditions
+
+The `if-elif-else` chain is appropriate to use for one test to pass. As soon as
+Python finds one test that passes, it skips the rest of the tests.
+Let's reconsider the pizzeria example. If someone requests for two-topping pizza,
+you'll need to be sure to include both topping on their pizza:
+```commandline
+# REFER: ../5.3.6.../toppings.py
+requested_toppings = ['mushrooms', 'extra cheese']
+
+if 'mushrooms' in requested_toppings:
+    print("Adding mushrooms.")
+if 'pepperoni' in requested_toppings:
+    print("Adding pepperoni")
+if 'extra chees' in requested_toppings:
+    print("Adding extra cheese")
+    
+    print("\nFinished making your pizza!")
+```
+All of these conditionals are separated tests, so if it goes into one, it also
+executes the following condition. Such as the result is:
+```commandline
+Adding mushrooms.
+Adding extra cheese
+
+Finished making your pizza!
+```
+
+if we use the `if-elif-else` structure, that's just one condition, so, when it 
+passes, it skips the rest of the steps in the chain:
+```commandline
+requested_toppings = ['mushrooms', 'extra cheese']
+
+if 'mushrooms' in requested_toppings:
+    print("Adding mushrooms.")
+elif 'pepperoni' in requested_toppings:
+    print("Adding pepperoni.")
+elif 'extra cheese' in requested_toppings:
+    print("Adding extra cheese.")
+    
+print("\nFinished making your pizza!")
+```
+The output is:
+```commandline
+Adding mushrooms.
+
+Finished making your pizza!
+```
+
+
+
 
 ---
 ## 5.4 Using `if` Statements with Lists
