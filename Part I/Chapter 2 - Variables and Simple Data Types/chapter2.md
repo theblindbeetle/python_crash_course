@@ -4,9 +4,9 @@
 ---
 ## What Really Happens When You Run hello_world.py
 When you run a python a file like `hello_world.py` containing:
-```commandline
+```python
 print("Hello Python world!")
-Hello Python world!
+# output: Hello Python world!
 ```
 The ending <i>.py</i> indicates is a Python program.<br>
 The editor runs the file with the <i>Python interpreter</i> and determine what will happen with each word written in the program.
@@ -15,7 +15,7 @@ The editor runs the file with the <i>Python interpreter</i> and determine what w
 ## Variables:
 Let’s try using a variable in hello_world.py. Add a new line at the beginning
 of the file, and modify the second line:
-```commandline
+```python
 # REFER TO: hellow_world.py
 message = "test"
 print(message)
@@ -23,7 +23,7 @@ print(message)
 
 ### Naming and Using Variables:
 Naming rules and conventions.
-```commandline
+```python
 # Use letters, numers and underscore
 # Do not use numbers at the beginning, whitespaces
 
@@ -35,7 +35,6 @@ _1variable_ = 1
 # Incorrect naming:
 _1 variable = 1
 1variable = 1
-
 ```
 
 ### Avoiding Name Errors When Using Variables:
@@ -220,7 +219,7 @@ This can shorten and make more readable your programs.
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
 You distinguish a constant because it is declared with all capital letters.<br>
 Python doesn't have a built-in constant types, even though, programmers use it all capital letters to indicate it should never change. 
-```commandline
+```python
 MAX_CONNECTIONS = 5000
 ```
 
@@ -235,7 +234,7 @@ A comment allows you to write notes in English within your programs.
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
 A hash mark (#) indicates a comment.
 anything after that is ignored by the Python interpreter. For example
-```commandline
+```python
 # Say hello to everyone.
 print("Hello Python people!")
 ```

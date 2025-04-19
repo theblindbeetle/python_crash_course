@@ -12,7 +12,7 @@ In these and other cases you can use a python's `for` loop.
 If we have a list of magicians' names, and we want to print it, doing it one by one would be problematic.
 Also, every time a new name is added, or deleted, we would need to update the code.
 A better approach is us a `for` loop.
-```commandline
+```python
 # REFER: magicians.py
 magicians = ['alice', 'david', 'calrolina']
 for magician in magicians:
@@ -20,7 +20,7 @@ for magician in magicians:
 ```
 The for loop goes one by one each position of the list, and the variable `magician` gets the value of tha position.
 This code could be represented by:
-```commandline
+```python
 magicians = ['alice', 'david', 'calrolina']
 magician0 = magicians[0]
 magician1 = magicians[1]
@@ -43,21 +43,21 @@ for magician in magicians:
 ```
 This stablish the list `magicians` and associate it with the variable `magician`.<br>
 The first value is 'alice'. Python then reads the next line:
-```commandline
+```python
 print(magician)
 ```
 Python prints the current value 'alice'. Since the list contains more values, Python returns to the first line of the loop:
-```commandline
+```python
 for magician in magicians:
 ```
 but this time, the value assigned to the variable `magician` is 'david':
-```commandline
+```python
 print(magician)
 ```
 Python prints 'david' and goes back again the first line of the loop and finds 'carolina' and print it.<br>
 Because there are no more values, python goes to the following line. For this program there are no more lines, so, the program simply ends.<br>
 When you write down you own loops, consider the variable in the loop (`magician` in the previous example) can be anything, but it's preferable that it is a meaningful name that represents a single item of the list; for example:
-```commandline
+```python
 for cat in cats:
 for dog in dogs:
 for item in list_of_items:
@@ -67,7 +67,7 @@ Using singular and plural names can help to identify if a section of the code is
 
 ### Doing More Work Within a for Loop
 You can do just about anything with each item in a `for` loop. let's print a message as example:
-```commandline
+```python
 # REFER: magicians2.py
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians:
@@ -82,7 +82,7 @@ That was an incredible trick, Carolina
 It is possible to write as many lines of code as you need in the `for` loop.
 Every indented line following the `for` loop is <i>inside the loop</i>.
 Let's add another line to the loop:
-```commandline
+```python
 # REFER: magicians3.py
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians:
@@ -105,7 +105,7 @@ I can't wait to see your next trick, Carolina.
 ### Doing Something After a for Loop
 Any lines of code after the `for` loop that are not indented are executed after the loop, without repetition.<br>
 Let's write a thanks message to the group:
-```commandline
+```python
 # REFER: magicians4.py
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians:
@@ -137,11 +137,11 @@ help you gain a general sense of the overall program’s organization.
 
 ### Forgetting to Indent
 After a `for` statement in a loop you need to indent the lines related to the loop, not doing is an error in the syntax of Python.
-```commandline
+```python
 # REFER: magicians5.py
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians:
-print(magician)
+    print(magician)
 ```
 if you try to run this it will cause an `IndentationError`:
 ```commandline
@@ -153,7 +153,7 @@ IndentationError: expected an indented block after 'for' statement on line 2
 
 ### Forgetting to Indent Additional Lines
 Sometimes you may forget to indent additional lines, this is a context error, because the syntax is correct and the program will work, but not with the behavior expected:
-```commandline
+```python
 # REFER: magicians6.py
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians:
@@ -170,10 +170,10 @@ I can't wait to see your next trick, Carolina.
 
 ### Indenting Unnecessarily
 If a line is indented unnecessarily, Python will throw an error when trying to run, for example:
-```commandline
+```python
 # REFER: 4.2.3.hello_world.py
 message = "Hello Python world!"
-    print(message)
+print(message)
 ```
 the output:
 ```commandline
@@ -186,7 +186,7 @@ Avoid using indentation unless it is necessary.
 ### Indenting Unnecessarily After the Loop
 If you indent after the loop a line that should not be part of it, the loop will execute it with every item of the list:
 
-```commandline
+```python
 # REFER: magicians7.py
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians:
@@ -220,7 +220,7 @@ valid syntax.
 
 ### Forgetting the Colon
 The colon (:) at the end of a for statement tells Python to interpret the next  line as the start of a loop.
-```commandline
+```python
 magicians = ['alice', 'david', 'carolina']
 for magician in magicians
     print(magician)
@@ -241,7 +241,7 @@ variety of tools to help you work efficiently with lists of numbers.
 Python’s range() function makes it easy to generate a series of numbers.
 For example, you can use the range() function to print a series of numbers
 like this:
-```commandline
+```python
 # REFER: first_numbers.py
 for value in range(1, 5):
     print(value)
@@ -257,7 +257,7 @@ in this example, `range()` prints only the numbers 1 through 4, which is a behav
 In Python the `range()` function starts with the first value provided, and stops on the second one. Then, to print 1-5 you would use `range(1,6)
 
 You can also pass one argument to `range()`, and it will return a sequence of numbers at 0:
-```commandline
+```python
 for value in range(6):
     print(value)
 ```
@@ -273,7 +273,7 @@ The output
 ### Using range() to Make a List of Numbers
 If you want to make a list of numbers, you can convert the results of range()
 directly into a list using the list() function.
-```commandline
+```python
 numbers = list(range(1, 6))
 print(numbers)
 ```
@@ -283,7 +283,7 @@ the output:
 ```
 Also, if you pass a third argument to range(), Python uses that value
 as a step size when generating numbers.
-```commandline
+```python
 # REFER: even_numbers.py
 even_numbers = list(range(2, 11, 2))
 print(even_numbers)
@@ -298,7 +298,7 @@ square numbers (that is, the square of each integer from 1 through 10). In
 Python, two asterisks (**) represent exponents. Here’s how you might put
 the first 10 square numbers into a list:
 
-```commandline
+```python
 # REFER: squares.py
 squares = []
 for value in range(1, 11):
@@ -313,9 +313,9 @@ the output:
 ```
 
 You can write this core more efficiently by avoiding the temporary variable `square`:
-```commandline
+```python
 squares = []
-for value = in range(1,11)
+for value in range(1,11):
     squares.append(value**2)
 
 print(squares)
@@ -342,7 +342,7 @@ The earlier example of squares used three or four lines of code. A <i>list compr
 
 A <i>list comprehension</i> combines the `for` loop and the creation of new elements into one line, and automatically appends each new element.<br>
 The following example shows the same list of square numbers but uses a list comprehension:
-```commandline
+```python
 # REFER: squares2.py
 squares = [value**2 for value in range(1,11)]
 print(squares)
@@ -375,7 +375,7 @@ before the second index you specify.<br>
 To output the first three elements  in a list, you would request indices 0 through 3, which would return elements 0, 1, and 2.<br>
 The following example involves a list of players on a team:
 
-```commandline
+```python
 # REFF: players.py
 players = ['charles', 'martina', 'michael', 'florence', 'eli']
 print(players[0:3])
@@ -386,7 +386,7 @@ It indicates where to start and where to stop. The output:
 ```
 
 <br>You can generate any subset of a list. for example starting on 1 and stopping on 4:
-```commandline
+```python
 # REFF: players2.py
 players = ['charles', 'martina', 'michael', 'florence', 'eli']
 print(players[1:4])
@@ -397,7 +397,7 @@ the output:
 ```
 
 <br>By omitting the first index in the slice, Python starts at the beginning of the list (or index 0):
-```commandline
+```python
 # REFF: players3.py
 players = ['charles', 'martina', 'michael', 'florence', 'eli']
 print(players[:4])
@@ -408,7 +408,7 @@ the output:
 ```
 
 <br>A similar syntax works if you want a slice that includes the end of a list:
-```commandline
+```python
 # REFF: players4.py
 players = ['charles', 'martina', 'michael', 'florence', 'eli']
 print(players[2:])
@@ -419,7 +419,7 @@ the output:
 ```
 <br>Recall that a negative index returns an element a certain distance from the end of a list;
 therefore, you can output any slice from the end of a list:
-```commandline
+```python
 # REFF: players5.py
 players = ['charles', 'martina', 'michael', 'florence', 'eli']
 print(players[-3:])
@@ -439,7 +439,7 @@ print(numbers[1:8:2])  # Output: [1, 3, 5, 7]
 You can use a slice in a for loop.<br>
 In the next example we loop through the first three
 players and print their names as part of a simple roster:
-```commandline
+```python
 # REFFL players6.py
 players = ['charles', 'martina', 'michael', 'florence', 'eli']
 
@@ -472,7 +472,7 @@ make a slice that starts at the first item and ends with the last item, producin
 For example, imagine we have a list of your favorite foods and want to
 make a separate list of foods that a friend likes. This friend likes everything
 in our list so far, so we can create their list by copying yours:
-```commandline
+```python
 # REFF: fppds.py
 my_foods = ['pizza', 'falafel', 'carrot cake']
 friend_foods = my_foods[:]
@@ -490,7 +490,7 @@ My friend's favorite foods are:
 ```
 
 To prove you're creating a new list, add a new food to each list.
-```commandline
+```python
 # REF Chapter4.../4.4.../foods2.py
 my_foods = ['pizza', 'falafel', 'carrot cake']
 friend_foods = my_foods[:]
@@ -511,9 +511,10 @@ My favorite foods are:
 My friend's favorite foods are:
 ['pizza', 'falafel', 'carrot cake', 'ice cream']
 ```
-Probably it seems easier to just say to python `list_copy = list_original`, but what happens when you do this is that `list_copy` is just pointing to the other list, instead of copying the values;<br>
-Let's try this out:
-```commandline
+Probably it seems easier to just say to python `list_copy = list_original`, but 
+what happens when you do this is that `list_copy` is just pointing to the other 
+list, instead of copying the values. Let's try this out:
+```python
 # REF Chapter4.../4.4.../foods3.py
 my_foods = ['pizza', 'falafel', 'carrot cake']
 friend_foods = my_foods
@@ -527,7 +528,7 @@ print("\nMy friend's favorite foods are:")
 print(friend_foods)
 ```
 The output:
-```commandline
+```text
 My favorite foods are:
 ['pizza', 'falafel', 'carrot cake', 'cannoli', 'ice cream']
 
@@ -551,7 +552,7 @@ change as immutable, and an immutable list is called a tuple.
 ### Defining a Tuple
 A tuple looks like a list except you use parentheses instead of square brackets.<br>
 If we have a rectangle that is always the same size, we can ensure it's size doesn't change by putting its dimensions into a tuple:
-```commandline
+```python
 # REF: "Chapter 4.../4.4.../dimensions.py"
 dimensions = (200, 50)
 print(dimensions[0])
@@ -563,7 +564,7 @@ the output:
 50
 ```
 trying to change the value in a tuple:
-```commandline
+```python
 # REF: "Chapter 4.../4.4.../dimensions2.py"
 dimensions = (200, 50)
 dimensions[0] = 250
@@ -589,7 +590,7 @@ Python returns an error for trying to update a tuple.
 
 ### Looping Through All Values in a Tuple
 
-```commandline
+```python
 # REF: "Chapter 4.../4.4.../dimensions3.py"
 dimensions = (200, 50)
 for dimension in dimensions:
@@ -603,7 +604,7 @@ Python returns all the elements in the tuple, just as it would for a list:
 
 ### Writing over a Tuple
 Although you can not modify a tuple, you can re-write the whole tuple:
-```commandline
+```python
 # REF: "Chapter 4.../4.4.../dimensions3.py"
 dimensions = (200, 50)
 print("Original dimensions:")

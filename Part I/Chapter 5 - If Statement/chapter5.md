@@ -7,7 +7,7 @@
 The following code loops through a list of car
 names and looks for the value 'bmw'. Whenever the value is 'bmw', it’s printed
 in uppercase instead of title case:
-```commandline
+```python
 # REFER: Chapter 5.../a_simple_example/cars.py
 cars = ['audi', 'bmw', 'subaru', 'toyota']
 
@@ -78,8 +78,7 @@ True
 You can verify when two values are not equal (!=). The exclamation point 
 represents <i>not</i>, as it does in many languages.<br>
 Let's check how it works:
-```commandline
-```commandline
+```python
 # REFER: Chapter 5.../conditianl_test/toppings.py
 requested_topping = 'mushrooms'
 
@@ -98,7 +97,7 @@ True
 ```
 
 You can test to see if two numbers are not equal.
-```commandline
+```python
 # REFER: "../5.2.4.numerical_comparisons/magic_number.py"
 answer = 17
 
@@ -157,7 +156,7 @@ In other words "<b><i>all the conditions need to be true, to return `True`.</i><
 To improve readability, you can use parentheses around the individual tests, 
 but they are not required. If you use them looks like this:
 ```commandline
-(age_0 >= 21) and (age_1 >= 21)
+>>> (age_0 >= 21) and (age_1 >= 21)
 ```
 
 #### 5.2.5.2 Using `or` to Check Multiple Conditions
@@ -200,7 +199,7 @@ use the keyword `not` in this situation.
 
 Consider a list of users banned for some comments in a forum. You can check
 whether a user has been banned before allowing that person to submit a comment:
-```commandline
+```python
 # REFER: Chapter 5.../5.2.conditianl_test/toppings.py
 banned_users = ['andrew', 'carolina', 'david']
 user = 'marie'
@@ -224,7 +223,7 @@ Boolean values are often used to keep track of certain conditions, such
 as whether a game is running or whether a user can edit certain content on
 a website:
 
-```commandline
+```python
 game_active = True
 can_edit = False
 ```
@@ -249,7 +248,7 @@ evaluates to True, Python executes the code following the if statement.
 If the test evaluates to False, Python ignores the code following the if
 statement.
 Let's verify if a person is old enough to vote:
-```commandline
+```python
 # REFER: Chapter 5.../5.3.if_statement/voting.py
 age = 19
 if age >= 18:
@@ -262,7 +261,7 @@ You are old enough to vote!
 Indentation plays the same role in if statements as it did in for loops.
 You can have as many lines of code as you want in the block following the if 
 statement; e.g.:
-```commandline
+```python
 age = 19
 if age >= 18:
 print("You are old enough to vote!")
@@ -282,7 +281,7 @@ other cases. Python’s if-else syntax makes this possible.
 We’ll display the same message we had previously if the person is old
 enough to vote, but this time we’ll add a message for anyone who is not
 old enough to vote:
-```commandline
+```python
 age = 17
 if age >= 18:
     print("You are old enough to vote!")
@@ -316,7 +315,7 @@ different age groups:
 How can we use an if statement to determine a person’s admission rate?
 The following code tests for the age group of a person and then prints an
 admission price message:
-```commandline
+```python
 # REFER: ../5.3.3.../amusement_park.py
 age = 12
 
@@ -347,7 +346,7 @@ Rather than printing the admission price within the if-elif-else block,
 it would be more concise to set just the price inside the if-elif-else chain
 and then have a simple print() call that runs after the chain has been
 evaluated:
-```commandline
+```python
 age = 12
 
 if age < 4:
@@ -362,7 +361,7 @@ print(f"Your admission cost is ${price}.)
 ### 5.3.4 Using Multiple `elif` Blocks
 It's the same principle, while more conditions is needed to link to the main if
 the most `elif` you aggregate to the conditional blocks.
-```commandline
+```python
 age = 12
 
 if age < 4:
@@ -380,7 +379,7 @@ print(f"Your admission cost is ${price}.)
 ### 5.3.5 Omitting the `else` block
 Python does not require an else block at the end of an if-elif chain.
 Just adapt to it, sometimes is better an `else` block, others an `elif`.
-```commandline
+```python
 age = 12
 
 if age < 4:
@@ -405,7 +404,7 @@ The `if-elif-else` chain is appropriate to use for one test to pass. As soon as
 Python finds one test that passes, it skips the rest of the tests.
 Let's reconsider the pizzeria example. If someone requests for two-topping pizza,
 you'll need to be sure to include both topping on their pizza:
-```commandline
+```python
 # REFER: ../5.3.6.../toppings.py
 requested_toppings = ['mushrooms', 'extra cheese']
 
@@ -429,7 +428,7 @@ Finished making your pizza!
 
 if we use the `if-elif-else` structure, that's just one condition, so, when it 
 passes, it skips the rest of the steps in the chain:
-```commandline
+```python
 requested_toppings = ['mushrooms', 'extra cheese']
 
 if 'mushrooms' in requested_toppings:
@@ -448,11 +447,129 @@ Adding mushrooms.
 Finished making your pizza!
 ```
 
-
-
-
 ---
 ## 5.4 Using `if` Statements with Lists
+You can do some interesting work when you combine lists and if statements. 
+You can watch for special values that need to be treated differently
+than other values in the list. You can manage changing conditions efficiently, 
+such as the availability of certain items in a restaurant throughout a
+shift. You can also begin to prove that your code works as you expect it to in
+all possible situations.
 
+### 5.4.1 Checking for Special Items
+Let's take a closer look of how to handel special values appropriately.
+The pizzeria displays a message whenever a topping is added to your pizza,
+as it's being made.
+The code ofr this action can be written very efficiently by making a list of
+toppings the customer has requested and using a loop to announce each topping as
+it's added to the pizza:
+
+```python
+# REFER: ../5.4.1.../toppings.py
+requested_toppings = ['mushrooms', 'green peppers', 'extra cheese']
+
+for requested_topping in requested_toppings:
+    print("Adding {requested_topping}.")
+    
+print("\nFinished making your pizza!")
+```
+The output:
+```commandline
+Adding {requested_topping}.
+Adding {requested_topping}.
+Adding {requested_topping}.
+
+Finished making your pizza!
+```
+But what if the pizzeria runs out of green peppers? An if statement
+inside the for loop can handle this situation appropriately:
+```python
+requested_toppings = ['mushrooms', 'green peppers', 'extra cheese']
+
+for requested_topping in requested_toppings:
+    if requested_topping == 'green peppers':
+        print("Sorry, we are out of green peppers right now.")
+    else:
+        print(f"Adding {requested_topping}.")
+    
+print("\nFinished making your pizza!")
+```
+The output:
+```commandline
+Adding mushrooms.
+Sorry, we are out of green peppers right now.
+Adding extra cheese.
+
+Finished making your pizza!
+```
+
+### 5.4.2 Checking That a List Is Not Empty
+In previous situations we always assume that the list contains data, but, what
+if it doesn't?
+By using the example of toppings, consider the customer doesn't add ingredients.
+```python
+requested_toppings = []
+
+if requested_toppings:
+    for requested_topping in requested_toppings:
+        print(f"Adding {requested_topping}.")
+    print("\nFinished making your pizza!")
+else:
+    print("Are you sure you want a plain pizza?")
+```
+We created an empty list, instead going right into the for loop, it asks if
+`requested_toppings` contains something: if it does, start the for loop. If it
+does not, ask the user if plain pizza is actually desired.
+The list is empty in this case, so the output asks if the user really wants
+a plain pizza:
+```commandline
+Are you sure you want a plain pizza?
+```
+If the list is not empty, the output will show each requested topping
+being added to the pizza.
+
+### 5.4.3 Using Multiple Lists
+What if a customer wants french fries on their pizza? you can use lists and if
+statement to make sure your input makes sense before ya can act on it.
+The following example defines two lists. One for available toppings, and other
+for requested toppings. This time each item in  `requested_toppings` is checked
+against `available_toppings`.
+```python
+# REFER: ../5.4.1.../toppings.py
+available_toppings = ['mushrooms', 'olives', 'green peppers', 'pepperoni', 
+                    'pineapple', 'extra cheese']
+requested_toppings = ['mushrooms', 'french fries', 'extra cheese']
+
+for requested_topping in requested_toppings:
+    if requested_topping in available_toppings:
+        print(f"Adding {requested_topping}.")
+    else:
+        print(f"Sorry, we don't have {requested_topping}.")
+
+print("\nFinished making your pizza!")
+```
+So, we have a `for loop` tha goes though `requested_toppings`, by checking if
+they exist in `available_toppings` if it does, prints that it is adding the
+topping, if it does not, apologize because  it is not available.
+Here the output:
+```commandline
+Adding mushrooms.
+Sorry, we don't have french fries.
+Adding extra cheese.
+
+Finished making your pizza!
+```
 ---
 ## 5.5 Styling Your `if` Statements
+In every example in this chapter, you’ve seen good styling habits. The only
+recommendation PEP 8 provides for styling conditional tests is to use a
+single space around comparison operators, such as ==, >=, <=. For example:
+```python
+if age < 4:
+```
+is better than
+```python
+if age<4:
+```
+Such spacing does not affect the way Python interprets your code; it just
+makes your code easier for you and others to read.
