@@ -301,7 +301,550 @@ indicate the absence of a value.
 
 ---
 ## 6.3 Looping Through a Dictionary
+A dictionary (in Python) can contain large amount of data, because of it, Python
+let you loop  through it. You can loop a dictionary through its keys or through
+its values.
+
+### 6.3.1 Looping Through All Key-Value Pairs
+Let's consider a dictionary designed to store information about a user on a
+website. The following dictionary would store one person's user's name, first
+name, and last name:
+```python
+user_0 = {
+    'username': 'efermi',
+    'first': 'enrico',
+    'last': 'fermi',
+    }
+```
+You can access a single value with the approach `user_0['username]`, or you can
+use a for loop to go through all the dictionary:
+```python
+# REFER: ../6.3.../6.3.1.../user.py
+user_0 = {
+    'username': 'efermi',
+    'first': 'enrico',
+    'last': 'fermi',
+    }
+
+for key, value in user_0.items():
+    print(f"\nKey: {key}")
+    print(f"Value: {value}")
+```
+Notice that `key` and `value` are variables create to work with the for loop,
+and you can name them as you need; for example `k` standing for 'key', and `v`
+standing for 'value'; so that you have:
+```python
+for k, v, in user_0.items()
+```
+Also, look how the dictionary uses the method `items()`, which
+returns a list of key-value paris .
+
+As you can see the `\n` (newline) is printed every time a key is printed,and it
+is printed before each 'Key':
+```commandline
+
+Key: username
+Value: efermi
+
+Key: first
+Value: enrico
+
+Key: last
+Value: fermi
+```
+Looping through all key-value pairs works particularly well for dictionaries
+which store the same kind of information for many different keys. Let's loop
+through the dictionary created for 'favorite_languages.py' where the keys always
+refer to a person, and the value to a language. Also, let's use `name` and
+`language` instead of `key` and `value` to make it easier to understand what the
+`print()` call is doing.
+
+```python
+# REFER: ../6.3.../6.3.1.../favorite_languages.py
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+    }
+
+for name, language in favorite_languages.items():
+    print(f"{name.title()}'s favorite language is {language.title()}")
+```
+Python loops through each key-value pair in the dictionary, and assign the key
+to `name`, as does with value to 'language'. 
+The output:
+```commandline
+Jen's favorite language is Python
+Sarah's favorite language is C
+Edward's favorite language is Ruby
+Phil's favorite language is Python
+```
+
+### 6.3.2 Looping Through All the Keys in a Dictionary
+The <i>keys()</i> method is useful when you don't need to work with all the
+values in a dictionary. Let's loop through the `favorite_languages` dictionary 
+and print the name of everyone who took the poll:
+```python
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+    }
+
+for name in favorite_languages.keys():
+    print(name.title())
+```
+The output:
+```commandline
+Jen
+Sarah
+Edward
+Phil
+```
+Since looping through the keys the default behavior it would do the same with:
+```python
+for name in favorite_languages:
+    print(name.title())
+```
+In this case, adding the `keys()` method makes the code easier to read, but it
+is up to you.
+
+You can access the value of a key  inside the loop by using the current key.
+We'll loop through the dictionary, but now, when we find a specific friend the
+program will print a message for that friend.
+```python
+# REFER: ../6.3.../6.3.2.../favorite_languages.py
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+    }
+
+friends = ['phil', 'sarah']
+for name in favorite_languages.keys():
+    print(name.title())
+
+    if name in friends:
+        language = favorite_languages[name].title()
+        print(f"\t{name.title()}, I see you love {language}!")
+```
+We have created a list `friends = ['phil', 'sarah']`. In the conditional we
+check whether the `name` we're working with is in the list `firends`. If it is,
+we get the value based on that name and formatted with the method `title()`.
+The output is:
+```commandline
+Jen
+Sarah
+	Sarah, I see you love C!
+Edward
+Phil
+	Phil, I see you love Python!
+```
+Now let's find out if 'Erin' took the poll
+```python
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+    }
+
+if 'Erin' not in favorite_languages.keys():
+    print("Erin, please take our poll!")
+```
+The `keys()` method is not just for looping, it returns a list of all the keys.
+As you can see in previous code, the conditional line checks if 'Erin' is in the
+list. And because she's not, the message is printed:
+```commandline
+Erin, please take our poll!
+```
+
+### 6.3.2 Looping Through a Dictionary's Keys in  a Particular Order
+Starting in Python 3.7, looping through a dictionary returns the items in
+the same order they were inserted. Sometimes, though, you’ll want to loop
+through a dictionary in a different order.
+One way to do this is to sort the keys as they’re returned in the for loop.
+You can use the sorted() function to get a copy of the keys in order:
+```python
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+    }
+
+for name in sorted(favorite_languages.keys()):
+    print(f"{name.title()}, thank you for taking the poll.")
+```
+This is a normal `for` statement, except that the `dictionary.keys()` is
+wrapped in the function `sorted()`. This tells python to sort the list before
+looping through the dictionary. The output is:
+```commandline
+Edward, thank you for taking the poll.
+Jen, thank you for taking the poll.
+Phil, thank you for taking the poll.
+Sarah, thank you for taking the poll
+```
+
+### 6.3.2 Looping Through All Values in a Dictionary
+If the values are the elements of your interest you can loop through the
+dictionary using the `values()` method to return a list of them without keys.
+For example, getting the list of languages in the poll:
+```python
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+    }
+
+print('The following languages have been mentioned in the poll:')
+for language in favorite_languages.values():
+    print(language.title())
+```
+The output is:
+```commandline
+The following languages have been mentioned in the poll:
+Python
+C
+Python
+Ruby
+```
+This approach returns all the values without checking for repeats.
+To see each language without repetition you can use `set`.
+```python
+favorite_languages = {
+    'jen': 'python',
+    'sarah': 'c',
+    'edward': 'ruby',
+    'phil': 'python',
+    }
+
+print('The following languages have been mentioned in the poll:')
+for language in set(favorite_languages.values()):
+    print(language.title())
+```
+We use set() to pull out the unique languages in favorite_languages.values().
+The output:
+```commandline
+The following languages have been mentioned:
+Python
+C
+Ruby
+```
+> You can build a set directly by using braces and separating the elements with
+> commas: 
+> ```pycon
+> >>> languages = {'python', 'ruby', 'python', 'c'}
+> >>> languages
+> {'ruby', 'python', 'c'}
+> ```
 
 ---
 ## 6.4 Nesting
+Sometimes you’ll want to store multiple dictionaries in a list, or a list of
+items as a value in a dictionary. This is called nesting. You can nest 
+dictionaries inside a list, a list of items inside a dictionary, or even a 
+dictionary inside another dictionary. Nesting is a powerful feature, as the 
+following examples will demonstrate.
+
+### 6.4.1 A List of Dictionaries
+The alien_0 dictionary contains a variety of information about one alien,
+but it has no room to store information about a second alien, much less a
+screen full of aliens. How can you manage a fleet of aliens? One way is to
+make a list of aliens in which each alien is a dictionary of information about
+that alien. For example, the following code builds a list of three aliens:
+```python
+# REFER: ../6.4.../6.4.1.../aliens.1.py
+alien_0 = {'color': 'green', 'points': 5}
+alien_1 = {'color': 'yellow', 'points': 10}
+alien_2 = {'color': 'red', 'points': 15}
+
+aliens = [alien_0, alien_1, alien_2]
+
+for alien in aliens:
+    print(alien)
+```
+The output:
+```commandline
+{'color': 'green', 'points': 5}
+{'color': 'yellow', 'points': 10}
+{'color': 'red', 'points': 15}
+```
+
+A more realistic example would involve more than 3 aliens with code that
+automatically generates each alien. In the following example we use `range()`
+to create a fleet of 30 aliens:
+```python
+# REFER: ../6.4.../6.4.1.../aliens.2.py
+# Make an empty list for storing aliens.
+aliens[]
+
+# Make a 30 green aliens.
+for alien_number in range(30):
+    new_alien = {'color': 'green', 'points': 5, 'speed': 'slow'}
+    aliens.append(new_alien)
+
+# Show the first 5 aliens.
+for alien in aliens[:5]:
+    print(alien)
+print(...)
+
+# Show how many aliens have been created.
+print(f"Total of aliens: {len(aliens)}")
+```
+It starts by creating an empty list. Then creates the aliens and appends them to
+the list.
+When showing the aliens stored, we use a slice to it print the first 5 aliens.
+And in the last line it is printed the total of aliens created.
+The output is:
+```commandline
+{'color': 'green', 'points': 5, 'speed': 'slow'}
+{'color': 'green', 'points': 5, 'speed': 'slow'}
+{'color': 'green', 'points': 5, 'speed': 'slow'}
+{'color': 'green', 'points': 5, 'speed': 'slow'}
+{'color': 'green', 'points': 5, 'speed': 'slow'}
+...
+Total number of aliens:  30
+```
+All the aliens have the same characteristics, but Python consider each one a
+different object, therefore, each one can be modified individually.
+
+Imagine that while the game progress, aliens change their color and move faster.
+When it's time to change colors, we can use a for loop and an `if` statement to
+change the color of the aliens. Let's upgrade aliens from level 1 to level 2:
+
+| Level | Color   | Speed  | Points |
+|:------|:--------|:-------|:-------|
+| 1     | green   | slow   | 5      |
+| 2     | yellow  | medium | 10     |
+| 3     | red     | fast   | 15     |
+
+```python
+# REFER: ../6.4.../6.4.1.../aliens.3.py
+# Make an empty list for storing aliens.
+aliens = []
+
+# Make 30 green aliens.
+for alien_number in range(30):
+    new_alien = {
+        'color': 'green',
+        'points': 5,
+        'speed': 'slow'}
+    aliens.append(new_alien)
+
+# Loop through a slice of the first three aliens and update the values.
+for alien in aliens[:3]:
+    if alien['color'] == 'green':
+        alien['color'] = 'yellow'
+        alien['speed'] = 'medium'
+        alien['points'] = 10
+
+# Show the first 5 aliens.
+for alien in aliens[:5]:
+    print(alien)
+print("...")
+```
+In the second for loop, we ensure the aliens are green, because they not always
+will be, if they are, we modify them. Here's the output:
+```commandline
+{'color': 'yellow', 'points': 10, 'speed': 'medium'}
+{'color': 'yellow', 'points': 10, 'speed': 'medium'}
+{'color': 'yellow', 'points': 10, 'speed': 'medium'}
+{'color': 'green', 'points': 5, 'speed': 'slow'}
+{'color': 'green', 'points': 5, 'speed': 'slow'}
+...
+```
+An `elif` block could be added to modify from yellow to red.
+```python
+for alien in aliens[0:3]:
+    if alien['color'] == 'green':
+        alien['color'] = 'yellow'
+        alien['speed'] = 'medium'
+        alien['points'] = 10
+    elif alien['color'] == 'yellow':
+        alien['color'] = 'red'
+        alien['speed'] = 'fast'
+        alien['points'] = 15
+```
+It's common to store dictionaries with information about one object in lists.
+For example, a particular user information is stored in a dictionary (i.e. 
+user.py in 6.3.1), but all the dictionaries of all users are stored in a list.
+> NOTE: All the dictionaries in a list should have the same structure to be able
+> to loop through the list and work with each dictionary object in the same way.
+
+### 6.4.2 A List in a Dictionary
+Sometimes is useful to put a list inside a dictionary. For example, consider
+describing a pizza being ordered. If you use only a list, you could only store 
+a list of toppings. With a dictionary, the toppings, is just one aspect o the 
+pizza to describe.
+
+In the following example two kind of information are stored for each pizza:
+
+1. Type of crust.
+2. Toppings.
+
+The <i>list of toppings</i> is a value associated with the key 'toppings'. To
+use the items in the list give the name of the dictionary and the key.
+
+```python
+# REFER: ../6.4.../6.4.2.../pizza.py
+# Store information about a pizza being ordered.
+pizza = {
+    'crust': 'thick',
+    'toppings': ['mushrooms', 'extra cheese'],
+    }
+# Summarize the order.
+print(f"You ordered a {pizza['crust']}-crust pizza "
+    "with the following ingredients:")
+
+for topping in pizza['toppings']:
+    print("\t" + topping)
+```
+We have 3 things to talk about: pizza dictionary; print() call; toppings list.
+
+As you can see, the dictionary `pizza` contains two key-value pairs, the first
+one, 'crust' is associated with a <i>string</i>, and the second one, 'toppings',
+with a <i>list</i>.<br>
+
+The print() call, has a long text, it was needed to brake it down. Take a look
+in these things:
+1. Parenthesis wraps both lines.
+2. First and second lines starts and end with quotation marks.
+3. At the end of the first line remains the space, like this 'pizza '.
+4. Indent the second line so it is clear is part of the print function.
+
+To access the list of toppings, we use the key 'toppings'. 
+
+The output is:
+```commandline
+You ordered a thick pizza, with the following ingredients:
+	mushrooms
+	extra cheese
+```
+
+You can nest a list inside a dictionary anytime you want more than one value to
+be associated with a single key in a dictionary.<br>
+Suppose that in the example of favorite languages, people could choose more than
+one favorite language. When we loop through the dictionary, the value
+associated with a person would be a list of languages.
+Inside the dictionary's `for` loop, we use another `for` loop to run through the
+list of languages:
+```python
+# REFER: ../6.4.../6.4.2.../favorite_languages.py
+fav_languages = {
+    'jen': ['python', 'ruby'],
+    'sarah': ['c'],
+    'edward': ['ruby', 'go'],
+    'phil': ['python', 'haskell'],
+}
+for name, languages in fav_languages.items():
+    print(f"{name.title()} favorite languages are:")
+    for language in languages:
+        print(f"\t{language.title()}")
+```
+As you can see each name is now associated with a list of languages. Even when
+in the list is just one language we can loop through it because it remains the
+same structure.<br>
+The first `for` loop goes through each key-value pair. The second `for` loop
+goes through each value, since is a list and not a single string, like this
+example in previous chapters. Now each person can list as many favorite 
+languages as they like:
+```commandline
+Jen favorite languages are:
+	Python
+	Ruby
+Sarah favorite languages are:
+	C
+Edward favorite languages are:
+	Ruby
+	Go
+Phil favorite languages are:
+	Python
+	Haskell
+```
+
+To refine the program you could include an `if` statement to validate whether
+a person has more than one favorite language and adapt the output to that.
+```python
+fav_languages = {
+    'jen': ['python', 'ruby'],
+    'sarah': ['c'],
+    'edward': ['ruby', 'go'],
+    'phil': ['python', 'haskell'],
+}
+for name, languages in fav_languages.items():
+    message = "s are" if  len(languages) > 1 else " is"
+    print(f"{name.title()} favorite language{message}:")
+    for language in languages:
+        print(f"\t{language.title()}")
+```
+The output is:
+```commandline
+Jen favorite languages are:
+	Python
+	Ruby
+Sarah favorite language is:
+	C
+Edward favorite languages are:
+	Ruby
+	Go
+Phil favorite languages are:
+	Python
+	Haskell
+```
+
+> You should not nest lists and dictionaries too deeply. If you’re nesting items much
+deeper than what you see in the preceding examples or you’re working with someone
+else’s code with significant levels of nesting, most likely a simpler way to solve the
+problem exists.
+
+### 6.4.3 A Dictionary in a Dictionary
+You can nest a dictionary inside another dictionary, but your code can get
+complicated quickly when you do.
+In the following example consider as a website that has multiple users, and it
+requires to store the username as unique value, and also, other information
+about the user (firs name, last name, and location).
+In the first level of the dictionary is a key-value pair for:
+<br>`'username': user_information`<br>
+where `user_information` is a dictionary object containing 3 key-value pairs.
+<br>`'first': 'user f_name', 'last': 'user l_name', 'location': 'user place',`<br>
+```python
+# REFER: ../6.4.../6.4.3.../many_users.py
+users = {
+    'aeinstein':{
+        'first': 'albert',
+        'last': 'einstein',
+        'location': 'princeton',
+        },
+    
+    'mcurie': {
+        'first': 'marie',
+        'last': 'curie',
+        'location': 'paris',
+        }
+    
+    }
+
+for username, info in users.items():
+    print(f"\nUsername: {username}")
+    full_name = f"{info['first'].title()} {info['last'].title()}"
+    lcation = info['location'].title()
+    print(f"\tFull name: {full_name}")
+    print(f"\tLocation: {location}")
+```
+
+The output is:
+```commandline
+Username: aeinstein
+	Full name: Albert Einstein
+	Location: Princeton
+
+Username: mcurie
+	Full name: Marie Curie
+	Location: Paris
+```
 
