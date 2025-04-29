@@ -417,9 +417,141 @@ stops when it is expected.
 
 ---
 ## 7.3 Using a while Loop with Lists and Dictionaries
+So far, we’ve worked with only one piece of user information at a time. We
+received the user’s input and then printed the input or a response to it.<br>
+The next time through the while loop, we’d receive another input value
+and respond to that. But to keep track of many users and pieces of information,
+we’ll need to use lists and dictionaries with our while loops.
 
+A for loop is effective for looping through a list, but you shouldn’t modify
+a list inside a for loop because Python will have trouble keeping track of the
+items in the list. To modify a list as you work through it, use a while loop.
+
+Using while loops with lists and dictionaries allows you to collect, store, and
+organize lots of input to examine and report on later.
 
 ### 7.3.1 Moving Items from One List to Another
-### 7.3.2 Removing All Instances of Specific Values from a List
-### 7.3.3 Filling a Dictionary with User Input
+Consider a list of newly registered but unverified users of a website. After
+we verify these users, how can we move them to a separate list of confirmed
+users?<br>
+One way would be to use a while loop to pull users from the list of
+unconfirmed users as we verify them and then add them to a separate list of
+confirmed users.
 
+Here’s what that code might look like:
+```python
+# REFER: ../7.3.../7.3.1.../confirmed_users.py
+# Start with users that need to be verified,
+# and empty list to hold confirmed users
+unconfirmed_users = ['alice', 'brian', 'candace']
+confirmed_users = []
+
+# Verify each user until there are no more unconfirmed users.
+# Move each verified user into the list of confirmed users.
+while unconfirmed_users:
+    current_user = unconfirmed_users.pop()
+
+    print(f"Verifying users: {current_user.title()}")
+    confirmed_users.append(current_user)
+
+# Display all confirmed users.
+print("\nThe following users have been confirmed:")
+for confirmed_user in confirmed_users:
+    print(confirmed_user.title())
+```
+We start creating the lists for confirmed users, and for not confirmed ones.
+Then, the `while` loop will work while `unconfirmed_users` contains elements.
+<br> We use `pop()` to take off the newest element from `unconfirmed_users` 
+list, and put the value in the variable `current_user`, the first taken is 
+"Candace", then "Brian", and at last "Alice".<br>
+Print the `current_user`, the variable assigned in previous step.<br>
+Then move it to the list `confirmed_users`.
+Print confirmed users message and elements in `confirmed_users` list.
+
+Here's the output:
+```python
+Verifying users: Candace
+Verifying users: Brian
+Verifying users: Alice
+
+The following users have been confirmed:
+Candace
+Brian
+Alice
+```
+
+### 7.3.2 Removing All Instances of Specific Values from a List
+If you have a value repeated several times in a list you can use a while loop to
+remove all the repeated values:
+```python
+# REFER: ../7.3.../7.3.2.../pets.py
+pets = ['dog', 'cat', 'dog', 'godlfish', 'cat', 'rabbit', 'cat']
+print(pets)
+
+while 'cat' in pets:
+    pets.remove('cat')
+
+print(pets)
+```
+We create the list, print it, and the go through the list while 'cat' exists in
+it. Everytime 'cat' is found in the list, the value is removed.
+
+The output is:
+```commandline
+['dog', 'cat', 'dog', 'goldfish', 'cat', 'rabbit', 'cat']
+['dog', 'dog', 'goldfish', 'rabbit']
+```
+
+### 7.3.3 Filling a Dictionary with User Input
+You can prompt for as much input as you need in each pass through a while
+loop. Let’s make a polling program in which each pass through the loop
+prompts for the participant’s name and response. We’ll store the data we
+gather in a dictionary, because we want to connect each response with a
+particular user:
+```python
+# REFER: ../7.3.../7.3.3.../mountain_poll.py
+responses = {}
+
+# Set a flag to indicate that polling is active.
+polling_active = True
+
+while polling_active:
+    # Prompt for the person's name and response.
+    name = input("\nWhat is your name? ")
+    response = input("Which mountain would you like to climb someday? ")
+
+    # Store the response in the dictionary.
+    responses[name] = response
+
+    # Find out if anyone else is going to take the oll.
+    repeat = input ("Would you like to let another person respond? (yes/ no) ")
+    if repeat == 'no':
+        polling_active = False
+
+# Polling is complete. Show the results.
+print("\n--- Poll Results ---")
+for name, response in responses.items():
+    print(f"{name} would like to climb the mountain {response}.")
+```
+Let's brake it down. First we create a flag, which is the conditional for the 
+`while` loop, starts as `True` so it goes into the loop.<br>
+We ask for two inputs `name` and `mountain` to climb
+Those input values (key-value pairs) are added to the dictionary `responses`.
+one more input to validate if user want to terminate the program or keep it
+working for someone else to complete the poll.
+
+
+
+
+Here's the output:
+```commandline
+What is your name? Eric
+Which mountain would you like to climb someday? Denali
+Would you like to let another person respond? (yes/ no) yes
+What is your name? Lynn
+Which mountain would you like to climb someday? Devil's Thumb
+Would you like to let another person respond? (yes/ no) no
+--- Poll Results ---
+Lynn would like to climb Devil's Thumb.
+Eric would like to climb Denali.
+```
