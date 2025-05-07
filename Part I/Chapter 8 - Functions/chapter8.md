@@ -292,6 +292,185 @@ type' and 'pet_name'
 ```
 ---
 ## 8.3 Return Values
+A function doesn't have to display always its output. I can also return a value
+or set of values.<br>
+The <i>return</i> statement takes a value from inside the function and sends it
+back to the line that called the function.
+Return values allow you to move much of your program’s grunt work into
+functions, which can simplify the body of your program.
+
+### 8.3.1 Returning a Simple Value
+Let’s look at a function that takes a first and last name, and returns a neatly
+formatted full name:
+```python
+# REFER: ../8.3.../8.3.1.../formatted_name.py
+def get_formatted_name(first_name, last_name):
+    """Return a full name, neatly formatted."""
+    full_name = f"{first_name} {last_name}"
+    return full_name.title()
+
+musician = get_formatted_name('jimi', 'hendrix')
+print(musician)
+```
+We declared a function taking first and last names.<br>
+Then, documentation of the function.<br>
+The name is gathered into one variable.<br>
+The variable is returned as `title()`.<br>
+
+As we are returning a value, we can receive that returned value into a variable,
+as `musician`, so, when we call the function we can put the result in it.<br>
+The variable is printed.<br>
+The output:
+```commandline
+Jimi Hendrix
+```
+Consider this is a simple example, and we could just do `print("Jimi Hendirx")`,
+but with a larger program, you may "need to get the neat name several times". 
+
+### 8.3.2 Making an Argument Optional
+You can use default values to make an argument optional. It makes sense
+sometimes, so you should be able to choose if provide it or not, in those times.
+<br>
+&emsp; Let's consider that `get_formatted_name()` also, uses meddle name:
+```python
+def get_formatted_name(first_name, middle_name, last_name):
+    """Return a full name, neatly formatted."""
+    full_name = f"{first_name} {middle_name} {last_name}"
+    return full_name.title()
+
+musician = get_formatted_name('john', 'lee', 'hooker')
+print(musician)
+```
+In this case is forcing to use the middle name; the output is:
+```commandline
+John Lee Hooker
+```
+But, middle names are not always needed, so, we can make this optional:
+```python
+def get_formatted_name(first_name, last_name, middle_name=''):
+    """Return a full name, neatly formatted."""
+    if middle_name:
+        full_name = f"{first_name} {middle_name} {last_name}"
+    else:
+        full_name = f"{first_name} {last_name}"
+    return full_name.title()
+    
+
+musician = get_formatted_name('jimi', 'hendrix')
+print(musician)
+
+musician = get_formatted_name('john', 'lee', 'hooker')
+print(musician)
+```
+This modified version of our function works for people with just a first
+and last name, and it works for people who have a middle name as well:
+```commandline
+Jimi Hendrix
+John Lee Hooker
+```
+Optional values allow functions to handle a wide range of use cases
+while letting function calls remain as simple as possible.
+
+### 8.3.3 Returning a Dictionary
+A function can return any kind of value, like lists or dictionaries.
+```python
+# REFER: ../8.3.../8.3.3.../person.py
+def build_person(first_name, last_name):
+    """Return a dictionary of information about a person."""
+    person = {'first': first_name, 'last': last_name}
+    return person
+
+musician = build_person('jimi', 'hendrix')
+print(musician)
+```
+`build_person` puts first name and last name into a dictionary and return that 
+value.<br>
+The variable `mucisian` receives the returned value, when calling the function.
+<br>
+The last line prints the dictionary.
+```commandline
+{'first': 'jimi', 'last': 'hendrix'}
+```
+This function creates more meaningful information, since it prints not just the
+data, but the label of each element. You can add other elements ot the
+dictionary, like age, occupation, or middle name.<br>
+&emsp;Let's add the age of the person:
+```python
+def build_person(firsst_name, last_name, age=None):
+    """Return a dictionary of information about a person."""
+    person = {'first': first_name, 'last': last_name}
+    if age:
+        person['age'] = age
+    return person
+
+musician = build_person('jimi', 'hendrix', age=27)
+print(musician)
+```
+We added `age` to the function and assigned it the special value `None`, used
+when a variable has no specific value assigned to it.<br>
+In conditional tests, `None` evaluates to `False`. If the call includes the age
+it is stored in the dictionary.
+
+### 8.3.4 Using a function with a while Loop
+You can use a function with all the Python structures already mentioned so far.
+
+Let's use the `get_formatted_name()` function with a `while` loop to greet users
+more formally.
+```python
+# REFER: ../8.3.../8.3.4.../greeter.py
+def get_formatted_name(first_name, last_name):
+    """Return a full name, neatly formatted."""
+    full_name = f"{first_name} {last_name}"
+    return full_name.title()
+
+# This is an infinite loop!
+while True:
+    print("\nPlease tell me your name:")
+    f_name = input("First name: ")
+    l_name = input("Last name: ")
+    
+    formatted_name = get_formatted_name(f_name, l_name)
+    print(f"\nHello, {formatted_name}!")
+```
+This was the most basic way to execute the program into a while loop, but, it is
+an infinite loop, the easiest way (also, a better experience for the user) to
+terminate it is using the first inputs already there. We can do it by adding
+three lines:
+1. Print quitting information.
+2. A conditional statement to know whether break or not.
+3. The keyword `break`.
+```python
+# REFER: ../8.3.../8.3.4.../greeter.py
+def get_formatted_name(first_name, last_name):
+    """Return a full name, neatly formatted."""
+    full_name = f"{first_name} {last_name}"
+    return full_name.title()
+
+# This is an infinite loop!
+while True:
+    print("\nPlease tell me your name:")
+    print("(enter 'q' at any time to quit)")
+    f_name = input("First name: ")
+    if f_name == 'q':
+    break
+    l_name = input("Last name: ")
+    
+    formatted_name = get_formatted_name(f_name, l_name)
+    print(f"\nHello, {formatted_name}!")
+```
+The output:
+```commandline
+Please tell me your name:
+(enter 'q' at any time to quit)
+First name: eric
+Last name: matthes
+
+Hello, Eric Matthes!
+
+Please tell me your name:
+(enter 'q' at any time to quit)
+First name: q
+```
 
 ---
 ## 8.4 Passing a List
