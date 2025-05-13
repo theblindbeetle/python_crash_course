@@ -42,7 +42,7 @@ for when it creates documentation for the functions in your programs.
 * This is a <i>function call</i>, which tells Python to execute the code in the
 function.
 > NOTE: To call a function you write the name of the function, followed by any
-> necessary information in the parentheses. Beacuse no information is needed
+> necessary information in the parentheses. Because no information is needed
 > here, you can call the function just by the function name and parentheses,
 > `greet_user()`.
 
@@ -93,7 +93,7 @@ were written.
 * Keyword arguments, where each argument consist of a variable name and a value.
 * Lists and Dictionaries of values.
 
-## 8.2.1 Positional Arguments
+### 8.2.1 Positional Arguments
 Whe you call a function, Python must match each argument in the function call 
 with a parameter in the function definition.
 "As you declare parameters, as you pass arguments"
@@ -290,6 +290,7 @@ describe_pet()
 TypeError: describe_pet() missing 2 required positional arguments: 'animal_
 type' and 'pet_name'
 ```
+
 ---
 ## 8.3 Return Values
 A function doesn't have to display always its output. I can also return a value
@@ -641,9 +642,336 @@ working with large lists.
 
 ---
 ## 8.5 Passing an Arbitrary Number of Arguments
+If you don't know how many arguments the function will require, Python handles
+functions with an arbitrary number of parameters.<br>
+Let's consider building a pizza, It needs to accept a number of toppings, but
+you can't know ahead of time how many toppings a person will want. The function
+in the following example has one parameter, `*toppings`, but this time collects
+as many arguments as the calling line provides:
+```python
+# REFER: ../8.5.../pizza.py
+def make_pizza(*toppings):
+    """Print the list of toppings that have been requested."""
+    print(toppings)
+
+make_pizza('pepperoni')
+make_pizza('mushrooms', 'green peppers', 'extra cheese')
+```
+Let's break down this function definition:
+1. The parameter with an asterisk with the parameter name (`*toppins`) tells
+Python to create an empty tuple.
+2. Prints the parameter. Also, consider it handle different amount of
+parameters, as we call the function each time with 1 and 3 values.
+
+> Notice how python packs the arguments into a tuple, even if the function
+> receives only one value:
+```
+('pepperoni',)
+('mushrooms', 'green peppers', 'extra cheese')
+```
+Now, let's create a more organized output by looping the list and printing 
+values:
+```python
+def make_pizza(*toppings):
+    """Summarize the pizza we are about to make."""
+    print("\nPizza with toppings:")
+    for topping in toppings:
+       print(f"\t- {topping}")
+
+make_pizza('pepperoni')
+make_pizza('mushrooms', 'green peppers', 'extra cheese')
+```
+As you can see, the function adapts to the different amount of values:
+```commandline
+
+Pizza with toppings:
+	- pepperoni
+
+Pizza with toppings:
+	- mushrooms
+	- green peppers
+	- extra cheese
+```
+
+### 8.5.1 Mixing Positional and Arbitrary Arguments
+To mix up different kind of arguments, the parameter-arbitrary must be placed
+last in the function definition. Positional and keyword arguments first, then,
+any remaining arguments in the final parameter.<br>
+&emsp;Let's try a pizza requiring size and toppings;
+```python
+def make_pizza(size, *toppings):
+    """Print the size of the pizza and the required toppings"""
+    print(f"\nLet's make a:\n\t{size}' pizza\nWith the toppings:")
+    for topping in toppings:
+        print(f"\t- {topping}")
+
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+```
+First we have a direct positional value on `size` everything after that is
+stored in the tuple `toppings`, and the output is:
+```commandline 
+
+Let's make a:
+	16' pizza
+With the toppings:
+	- pepperoni
+
+Let's make a:
+	12' pizza
+With the toppings:
+	- mushrooms
+	- green peppers
+	- extra cheese
+```
+> You’ll often see the generic parameter name `*args`, which collects arbitrary positional
+> arguments like this.
+
+### 8.5.2 Using Arbitrary Keyword Arguments
+Python can also accept an arbitrary number of key-value paris as the calling
+statement provides. For example, building user profiles where you know that the
+function will get information about the user, but it doesn't know what kind of
+information will be received.
+
+The Function `build_profile()` takes in a first and last name, but it accepts an
+arbitrary number of keyword arguments as well:
+```python
+# REFER: ../8.5.../8.5.2.../user_profile.py
+def build_profile(first, last, **user_info):
+   """Build a dictionary containing everything we know about a user."""
+   user_info['first_name'] = first
+   user_info['last_name'] = last
+   return user_info
+
+user_profile = build_profile('albert', 'einstein',
+                             location='princeton',
+                             field='phyciscs')
+print(user_profile)
+```
+Let's see in detail this code:
+Summarizing, we created a function with two positional parameters and one
+'arbitrary key-pair values argument', which is a dictionary (because of the 
+`**`). Positional arguments are assigned to the dictionary, to return that
+dictionary with all the values. the value is returned to a variable which is
+printed.
+
+If you want to see a more detailed explanation go through the following points
+where it's break down point by point:
+
+* The definition of  `build_profile()` expects a first and last name, then any
+quantity of <i>name-value</i> paris as they want.
+* With a double asterisk before a parameter Python creates an empty dictionary. 
+* Within a function you can access the key-value pairs of <i>user_info</i> as
+any dictionary.
+* The body of `build_profile()` adds `first` and `last` to the dictionary 
+`user_info`, why? because:
+  * We always receive these two pieces of information.
+  * They are not in the dictionary yet.
+  * We return a dictionary with all the user's information to the call line.
+* We call `build_prodile()`, passing `'albert'`, `'einstein'`, and two key-pair
+values, `location='princeton'`,  and `field='phyciscs'`.
+* The returned value is assigned to `user_profile`.
+* We print the dictionary returned to `user_profile`.
+
+* The output is:
+```commandline
+{'location': 'princeton', 'field': 'phyciscs', 
+'first_name': 'albert', 'last_name': 'einstein'}
+```
+You can mix positional, keyword, and arbitrary values in many different ways
+when writing your own functions.
+> You’ll often see the parameter name **kwargs used to collect non-specific keyword
+arguments.
 
 ---
 ## 8.6 Storing Your Functions in Modules
+You can separate functions from your main program by putting the in a different
+file. That file is called a <i>module</i>, which, by <i>importing</i> it, can be
+used in your main program. The <i>import</i> statement tells Python to make
+available in the main program the code in a module.
+
+Advantages of separating functions in different files:
+* Your code to be more focused on higher-level logic
+* Functions ca be reused in different programs. 
+* You can share those files with other programmers without sharing your entire
+program.
+* You can use libraries of functions that other programmers have written.
+
+### 8.6.1 Importing an Entire Module
+To start importing functions, we need to create a module. A <i>module</i> is a
+file ending in <i>.py</i> that contains the code you want to import in your
+program.<br>
+&emsp;Let's make a module containing the function `make_pizza()`. To make this
+module we'll remove everything from the file <i>pizza.py</i> except the function
+`make_pizza()`:
+```python
+# REFER: ../8.6.../8.6.1.../pizza.py
+def make_pizza(size, *toppings):
+    """Summary the pizza we are about to make."""
+    print(f"\nMaking a {size}-inch pizza with the following toppings:")
+    for topping in toppings:
+        print(f"\t- {topping}")
+```
+Now we'll make a separated file called <i>making_pizzas.py</i> in the same 
+directory as <i>pizzas.py</i>. This file imports the module we just created and
+then makes two calls to `make_pizza()`:
+```python
+# REFER: ../8.6.../8.6.1.../making_pizzas.py
+import pizza
+
+pizza.make_pizza(16, '')
+pizza.make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+```
+The line `import pizza` tells Python to copy all the functions from 
+<i>pizza.py</i> into this program. The code is not visible in it, because all
+this happens behind the scenes before the program runs. What you need to know is
+that <i>pizza.py</i> is available in <i>making_pizzas.py</i>.<br>
+&emsp;To call a function from an imported module, enter the name of the module
+you imported followed by the name of the function, this, separated by  a dot.
+
+This code produces the same output as the original that didn't import a module:
+```commandline
+
+Making a 16-inch pizza with the following toppings:
+	- 
+
+Making a 12-inch pizza with the following toppings:
+	- mushrooms
+	- green peppers
+	- extra cheese
+```
+
+This way of importing, `import` followed by the <i>module name</i>, make every
+function in the module available in your program by using the following syntax:
+```python
+module_name.function_name()
+```
+
+### 8.6.2 Importing Specific Functions
+You can import just a specific function from a module:
+```python
+from module_name import function_name
+```
+By separating with a comma, you can add as many functions you want from a module:
+```python
+from module_name import function_0, function_1, function_2, function_3 
+```
+The <i>making_pizza.py</i> example with this approach, looks like this:
+```python
+from pizza import make_pizza
+
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+```
+In this case the dot notation is not necessary, because you imported the
+specific function `make_pizza()` in the import statement.<br>
+Instead of `pizza.make_pizza()`, you use `make_pizza()`.
+
+### 8.6.3 Using `as` to Give a Function an Alias
+For any convenient situation, as shortening a long name, or conflict with your
+current naming on you program, you can assign a nickname to a function when 
+importing it.<br>
+&emsp;You can call `make_pizza()` with the alias `mp()` by importing it as `mp`:
+```python
+from pizza import make_pizza as mp
+
+mp(16, 'pepperoni')
+mp(12, 'mushrooms', 'green peppers', 'extra cheese')
+```
+Instead of `make_pizza()`, you use `mp()`. The general
+syntax:
+```python
+from module_name import function_name as fn
+```
+
+### 8.6.4 Using as to Give a Module an Alias
+A module can also have an alias
+```python
+import pizza as p
+
+p.make_pizza(16, 'pepperoni')
+p.make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+```
+Instead of `pizza.make_pizza()`, you use `p.make_pizza()`. The general syntax:
+```python
+import module_name as mn
+```
+Calling the function with `p.make_pizza()` is more concise than 
+`pizza.make_pizza()` and redirects your attention from the module name and allows you
+to focus on the descriptive names of its functions.
+
+### 8.6.5 Importing All Functions in a Module
+You can import every function in a module by using the asterisk operator `*`,
+which is the same as importing each function by its name, so you don't need the
+dot notation.<br>
+It's better not using this approach when you're working with large modules you
+didn't write; when a function matches a name you use you can have unexpected
+results, because Python don't separate imported variables and functions, but 
+overwrites them.
+> The best approach is to import the function you want, or import the entire
+> module and use the dot notation. This lead to clear code that's easy to read
+> and understand.
+
+However, you can recognize this by the syntax:
+```python
+from module_name import *
+```
 
 ---
 ## 8.7 Styling Functions
+For styling functions keep in mind:
+* Naming:
+  * Descriptive names.
+  * Use lowercase.
+  * Use underscores.
+* Function description:
+  * A comment describing concisely what the function does.
+  * The comment appear immediately after the function definition.
+  * Use docstring format.
+
+> In a well-documented function, any programmer can use the function just by
+> reading the description in the docstring.<br>
+> As long as they know the name of the function, the arguments it needs, and the
+> kind of value it returns, they should be able to use it in their programs.
+
+If you specify a default value for a parameter, no space should be used on
+either side of the equal sign:
+```python
+def function_name(parameter_0, parameter_1='default value')
+```
+
+The same convention should be used for keyword arguments in function calls:
+```python
+function_name(value_0, parameter_1='value')
+```
+
+* PEP 8 (https://www.python.org/dev/peps/pep-0008/) recommends that you limit
+lines of code to 79 characters so every line is visible in a reasonably
+sized editor window. If a set of parameters causes a function’s definition to
+be longer than 79 characters, press enter after the opening parenthesis on
+the definition line.
+* On the next line, press tab twice to separate the list of
+arguments from the body of the function, which will only be indented one
+level.
+
+Most editors automatically line up any additional lines of parameters to
+match the indentation you have established on the first line:
+
+```python
+def function_name(
+        parameter_0, parameter_1, parameter_2,
+        parameter_3, parameter_4, parameter_5):
+    function body...
+)
+```
+
+If your program or module has more than one function, you can separate each by
+two blank lines to make it easier to see where one function ends and the next
+one begins.
+
+All import statements should be written at the beginning of a file.
+The only exception is if you use comments at the beginning of your file to
+describe the overall program.
+
+
+
