@@ -1,5 +1,3 @@
-from pydoc import describe
-
 # Chapter 8: Functions
 ### In this chapter you'll learn to create functions, which are blocks of code designed to do one, and only one, specify job.<br>Writing functions can make easy to write, read, test, and fix programs.
 
