@@ -9,7 +9,8 @@ print("Hello Python world!")
 # output: Hello Python world!
 ```
 The ending <i>.py</i> indicates is a Python program.<br>
-The editor runs the file with the <i>Python interpreter</i> and determine what will happen with each word written in the program.
+The editor runs the file with the <i>Python interpreter</i> and determine what 
+will happen with each word written in the program.
 
 ---
 ## Variables:
@@ -38,18 +39,21 @@ _1 variable = 1
 ```
 
 ### Avoiding Name Errors When Using Variables:
-Talks about mistakes when naming, like creating the variable 'message' and call it as 'mesage'.
+Talks about mistakes when naming, like creating the variable 'message' and 
+call it as 'message'.
 ```commandline
 >>> message = "test message 1"
 >>> print(mesage)
 test message 1
 ```
 ### Variables are Labels:
-Describes that variables are not containers, but they can be seen as labels assigned to values.
+Describes that variables are not containers, but they can be seen as labels 
+assigned to values.
 
 ---
 ## Strings:
-General description of strings and combinations between single and double quotes like:
+General description of strings and combinations between single and double 
+quotes like:
 ```commandline
 >>> print('I like to say: "This is a greate day!".')
 I like to say: "This is a greate day!".
@@ -79,7 +83,8 @@ Hello, Alexander Magnum!
 ```
 
 ### Adding Whitespace to Strings with Tabs or Newlines:
-In the string you can add "\t" for adding a tab and \n for adding a new line, such as follows:
+In the string you can add "\t" for adding a tab and \n for adding a new line,
+such as follows:
 ```commandline
 # REFER TO: whitespace.py
 >>> print("Languages:\n\tPython\n\tC\n\tJavaScript")
@@ -105,7 +110,8 @@ functions for taking off trailing and leading whitespaces
 ```
 
 ### Avoiding Syntax Errors with Strings
-It's important to consider the text erquirements, for example if we need to use an apostrophe within the text it's better to use double quote.
+It's important to consider the text requirements, for example if we need to
+use an apostrophe within the text it's better to use double quote.
 if single quote is used, it will end the message where it finds the apostrophe.
 ```commandline
 # REFER TO: apostrophe.py
@@ -115,12 +121,14 @@ One of Python's strengths is its diverse community.
 
 # this following line have a syntax error, :
 >>> message = 'One of Python's strengths is its diverse community.'
-# the string would be consider 'One of Python' and the rest like unrequired elements that generates syntax error.
+# the string would be consider 'One of Python' and the rest like unrequired
+# elements that generates syntax error.
 ```
 
 ---
 ## Numbers
-They are used to keep score in games, represent data in visualizations, stor information in web applications, and so on.
+They are used to keep score in games, represent data in visualizations, store
+information in web applications, and so on.
 
 ### Integers
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
@@ -155,14 +163,16 @@ the expressions
 ### Floats
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
 For python a <i>float</i> is any number with a decimal point.<br>
-For the most part, Python will handle decimals with no problem. Python most likely do what you expect:
+For the most part, Python will handle decimals with no problem. Python most 
+likely do what you expect:
 ```commandline
 >>> 0.2 + 0.2
 0.4
 >>> 2 * 0.1
 0.2
 ```
-But be aware sometimes, computers calculations (at lower levels) are tricky, like when they get 0.3 by a calculation:
+But be aware sometimes, computers calculations (at lower levels) are tricky, 
+like when they get 0.3 by a calculation:
 ```commandline
 >>> 0.2 + 0.1
 0.30000000000000004
@@ -172,7 +182,8 @@ But be aware sometimes, computers calculations (at lower levels) are tricky, lik
 
 ### Integers and Floats
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
-When you divide integers you will always get a float, even if the result is a whole number.
+When you divide integers you will always get a float, even if the result is a 
+whole number.
 ```commandline
 >>> 4/2
 2.0
@@ -218,7 +229,8 @@ This can shorten and make more readable your programs.
 ### Constants
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
 You distinguish a constant because it is declared with all capital letters.<br>
-Python doesn't have a built-in constant types, even though, programmers use it all capital letters to indicate it should never change. 
+Python doesn't have a built-in constant types, even though, programmers use it
+all capital letters to indicate it should never change. 
 ```python
 MAX_CONNECTIONS = 5000
 ```
@@ -227,7 +239,8 @@ MAX_CONNECTIONS = 5000
 ## Comments
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
 In previous examples probably comments are not necessary.
-But, while the program gets longer and more difficult to understand, comments become very useful.
+But, while the program gets longer and more difficult to understand, comments
+become very useful.
 A comment allows you to write notes in English within your programs.
 
 ### How Do You Write Comments?
@@ -245,18 +258,22 @@ Hello Python people!
 
 ### What Kind of Comments Should You Write?
 <sup><small><i>No 'file.py' is created for this topic.</i></small></sup><br>
-The main purpose to write a comment is to explain what the code is supposed to do and how it works.<br>
+The main purpose to write a comment is to explain what the code is supposed
+to do and how it works.<br>
 If you leave for a while a project, you may forget the code, 
-so making good comments can save you time by figuring out easier how it works.<br>
+so making good comments can save you time by figuring out easier how it
+works.<br>
 <br>
-Consider making meaningful comments so they are helpful for you future you and other programmers.<br>
+Consider making meaningful comments so they are helpful for you future you
+and other programmers.<br>
 And remember is much easier to delete extra comments later on
 than it is to go back and write comments for a sparsely commented program.
 
 
 ---
 ## The Zen of Python
-There are many ways of programming, but a good guidance of doing it well is by following "The Zen of Python".<br>
+There are many ways of programming, but a good guidance of doing it well is by
+following "The Zen of Python".<br>
 You can execute the following line to see the entire message.
 ```commandline
 >>> import this
@@ -266,12 +283,20 @@ Beautiful is better than ugly.
 
 ---
 ## Summary
-In this chapter you learned to work with variables. You learned to use descriptive variable names and how to resolve name errors and syntax errors when
-they arise. You learned what strings are and how to display strings using lowercase, uppercase, and title case. You started using whitespace to organize output neatly, and you learned to strip unneeded whitespace from different parts
-of a string. You started working with integers and floats, and learned some of
-the ways you can work with numerical data. You also learned to write explanatory comments to make your code easier for you and others to read. Finally,
-you read about the philosophy of keeping your code as simple as possible,
-whenever possible.<br>
+In this chapter you learned to work with variables. You learned to use
+descriptive variable names and how to resolve name errors and syntax
+errors when they arise.
+You learned what strings are and how to display strings using
+lowercase, uppercase, and title case. You started using whitespace to
+organize output neatly, and you learned to strip unneeded whitespace
+from different parts of a string.
+
+You started working with integers and floats, and learned some of
+the ways you can work with numerical data. You also learned to write
+explanatory comments to make your code easier for you and others to read.
+Finally, you read about the philosophy of keeping your code as 
+simple as possible, whenever possible.
+
 In Chapter 3 you’ll learn to store collections of information in data
 structures called lists. You’ll learn to work through a list, manipulating any
 information in that list.
