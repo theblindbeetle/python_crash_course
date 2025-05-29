@@ -370,7 +370,7 @@ class Car:
         --snip--
 
     def increment_odometer(selfself, miles):
-        """Ad the given amount to the odometer reading."""
+        """Adds the given amount to the odometer reading."""
         self.odometer_reading += miles
 
 my_used_car = Car('subaru', 'outback', 2015)
@@ -693,16 +693,320 @@ this process.
 
 ---
 ## 9.4 Importing Classes
+Python let you store classes in modules and import them into your programs,
+so you don't clutter your main files.
+
 ### 9.4.1 Importing a Single Class
+Let's create a file `car.py` with the `Car` class as follows:
+```python
+# REFER: ../9.4.../9.4.1.../car.py
+"""A class that can be used to represent a car."""
+
+class Car:
+    """A simple attempt to represent a car."""
+
+    def __init__(self, make, model, year):
+        """Initialize attributes to describe a car."""
+        self.make = make
+        self.model = model
+        self.year = year
+        self.odometer_reading = 0
+
+    def get_descriptive_name(self):
+        """Return a neatly formatted descriptive name."""
+        long_name = f"{self.year} {self.make} {self.model}"
+        return long_name.title()
+  
+    def read_odometer(self):
+          """Print a statement showing the car's mileage."""
+          print(f"This car has {self.odometer_reading} miles on it.")
+
+    def update_odometer(self, mileage):
+        """
+        Set the odometer reading to the given value.
+        Reject the change if it attempts to roll the odometer back.
+        """
+        if mileage >= self.odometer_reading:
+            self.odometer_reading = mileage
+        else:
+            print("You can't roll back an odometer!")
+  
+    def increment_odometer(self, miles):
+        """Add the given amount to the odometer reading."""
+        self.odometer_reading += miles
+```
+In the first docstring (the first line in the file), describes briefly
+the module. You should write a docstring for each module you create.<br>
+&emsp;Let's create a file called `my_car.py` that imports the class `Car`
+and creates an instance from that class:
+```python
+# REFER: ../9.4.../9.4.1.../my_car.py
+from car import Car
+
+my_new_car = Car('audi', 'a4', 2025)
+print(my_new_car.get_descriptive_name())
+
+my_new_car.odometer_reading = 23
+my_new_car.read_odometer()
+```
+The import statement (at the top) tells Python to open the `car` module and
+import the class `Car` to use it as it was defined in this file:
+```commandline
+2025 Audi A4
+This car has 23 miles on it.
+```
+Importing classes is an effective way to program. When you move the class
+to a module and import the module, you:
+* still get the functionality
+* keep clean and easy to read code
+* store the logic in separate files
+* don't touch the class file again when it works correctly.
+* focus on a higher-leve logic of your main program.
+
 ### 9.4.2 Storing Multiple Classes in a Module
-### 9.4.3 Importing an Entire Module
-### 9.4.4 Importing All Classes from a Module
-### 9.4.5 Importing a Module into a Module
-### 9.4.6 Using Aliases
-### 9.4.7 Finding Your Own Workflow
+A module can contain as many classes as needed, just consider, they should
+be related somehow. The class `Battery` and `ElectricCar` help to represent
+cars, let's add the to the module `car.py`:
+```python
+# REFER: ../9.4.../9.4.2.../car.py
+"""A set of classes used to represent gas and electric cars."""
+
+class Car:
+    --snip--
+
+class Battery:
+    """A simple attempt to model a battery for an electric car."""
+    
+    def __init__(self, battery_size=75):
+        """Initialize the battery's attributes."""
+        self.battery_size = battery_size
+    
+    def describe_battery(self):
+        """Print a statement describing the battery size."""
+        print(f"This car has a {self.battery_size}-kWh battery.")
+    
+    def get_range(self):
+        """Print a statement about the range this battery provides."""
+        car_range = 0
+        if self.battery_size == 75:
+            car_range = 260
+        elif self.battery_size == 100:
+            car_range = 315
+        print(f"This car can go about {car_range} miles on a full charge.")
+
+class ElectricCar(Car):
+    """Models aspects of a car, specific to electric vehicles."""
+    
+    def __init__(self, make, model, year):
+        """
+        Initialize attributes of the parent class.
+        Then initialize attributes specific to an electric car.
+        """
+        super().__init__(make, model, year)
+        self.battery = Battery()
+```
+Let's make the new file `my_electric_car.py`, import the `ElectricCar`
+class, and make an electric car:
+
+```python
+# REFER: ../9.4.../9.4.2.../my_electric_car.py
+from car import ElectricCar
+
+my_tesla = ElectricCar('tesla', 'model s', 2025)
+
+print(my_tesla.get_descriptive_name())
+my_tesla.battery.describe_battery()
+my_tesla.battery.get_range()
+```
+This is the same output saw earlier, but with the logic hidden in a module:
+```commandline
+2025 Tesla Model S
+This car has a 75-kWh battery.
+This car can go about 260 miles on a full charge.
+```
+
+### 9.4.3 Importing Multiple Classes from a Module
+You can import as many classes as you needed. Let's create a <i>car</i>
+and an <i>electric car</i>:
+```python
+# REFER: ../9.4.../9.4.3.../my_cars.py
+from car import Car, ElectricCar
+
+my_beetle = Car('volkswagen', 'beetle', 2025)
+print(my_beetle.get_descriptive_name())
+
+my_tesla = ElectricCar('tesla', 'roadster', 2025)
+print(my_tesla.get_descriptive_name())
+```
+You can import multiple classes from a module by separating with a comma.
+Once you import them, you can create instances as you need.<br>
+&emsp;This example describe a couple of  2025 cars. 
+The <i>Volkswagen Beetle</i> and an electric car <i>Tesla Roadster</i>:
+```commandline
+2025 Volkswagen Beetle
+2025 Tesla Roadster
+```
+
+### 9.4.4 Importing an Entire Module
+When importing an entire module, you use the <i>dot notation</i>.
+This results in code easy to read, because every instance you create
+from the class includes the module name. Let's try that approach:
+```python
+import car
+
+my_beetle = Car('volkswagen', 'beetle', 2025)
+print(my_beetle.get_descriptive_name())
+
+my_tesla = ElectricCar('tesla', 'roadster', 2025)
+print(my_tesla.get_descriptive_name())
+```
+We imported the entire `car` module. We used the dot notation syntax to
+access the class through the module name as: "<i>module_name.ClassName</i>".
+<br>&emsp;We use again the car
+<i>Volkswagen Beetle</i> and the electric car <i>Tesla Roadster</i>:
+```commandline
+2025 Volkswagen Beetle
+2025 Tesla Roadster
+```
+
+### 9.4.5 Importing All Classes from a Module
+You can import all the classes from a module by using:
+```python
+from module_name import *
+```
+This is not recommended for two reasons:
+1. It's helpful to read wha classes are used from a module by using `import`
+   (`from module import Class1, Class2, ClassN`).
+2. Using this approach may lead to confusion with names in the file.
+If you import two classes with the same name (from different modules),
+you can create errors hard to diagnose.
+
+### 9.4.6 Importing a Module into a Module
+You may want to spread out unrelated classes in different modules, but
+classes sometimes have dependency on other classes from other modules.
+You can into the module the class that it requires.<br>
+&emsp;Let's stor the `Car` class in one module and the classes `ElectricCar`
+and `Battery` in a separated module:
+```python
+# REFER: ../9.4.../9.4.6.../electric_car.py
+"""A set of classes that can be used to represent electric cars."""
+
+from car import Car
+
+class Battery:
+    --snip--
+    
+class ElectricCar(Car):
+    --snip--
+```
+The class `ElectricCar` needs access to its parent class `Car`, which we
+import into the module in the firs line of code. Also, we added a description
+for this module by adding the proper docstring.
+We also updated the `car` module, so it contains only the `Car` class. 
+```python
+# REFER: ../9.4.../9.4.6.../car.py
+"""A class that can be used to represent a car."""
+
+class Car:
+    --snip--
+```
+Now we can import from each module separately and create whatever kind of 
+car we need:
+
+```python
+# REFER: ../9.4.../9.4.6.../my_cars.py
+from car import Car
+from electric_car import ElectricCar
+
+my_beetle = Car('volkswagen', 'beetle', 2019)
+print(my_beetle.get_descriptive_name())
+
+my_tesla = ElectricCar('tesla', 'roadster', 2019)
+print(my_tesla.get_descriptive_name())
+```
+We import each class from its module, `Car` from `car` and `ElectricCar`
+from `electric_car`, Both kinds are created correctly:
+```commandline
+2025 Volkswagen Beetle
+2025 Tesla Roadster
+```
+
+### 9.4.7 Using Aliases
+As when importing functions, you can use aliases when importing class too.<br>
+&emsp;Consider making a lot of electric cars. It might get tedious typing
+(and reading) `ElectricCar` over and over again. You can give an alias in 
+the import statement:
+```python
+from electric_car import ElectricCar as EC
+```
+Now you can use the alias whenever you want to create an electric car:
+```python
+my_tesla = EC('tesla', 'roadster', 2025)
+```
+
+### 9.4.8 Finding Your Own Workflow
+Python gives you many options to structure code in large projects. And it's
+important to understand the options so you can organize your projects and
+understand other's people projects.
+
+If you're starting out, keep it simple. Create everything in one file. Once
+everything is working, separate your classes into different modules.
+Find an approach that lets you write code that works, and go from there.
 
 ---
 ## 9.5 The Python Standard Library
+The <i>Python Standard Library</i> is a set of modules included in every
+Python installation. You can use any function or class in the standard library
+by including an `import` statement. Let's use the module `random`, which
+can help modeling real-world situations.<br>
+&emsp;An interesting function from random is `randint()`. which receives
+two numbers and returns a random value between those numbers (including them).
+```pycon
+>>> from random import randint
+>>> randint(1,6)
+3
+```
+Another useful function is `choice()`. This function takes in a list or tuple
+and retunrs a randomly chosen element:
+```pycon
+>>> from randome import choice
+>>> players = ['charles', 'martina', 'michael', 'florence', 'eli']
+>>> first_up choice(players)
+'florence'
+```
+The random module shouldn't be used when building security applications, but
+for other fun and interesting projects it's good.
+
+>NOTE:<br>
+> You can also download modules from external sources. You'll see a number of
+> these examples in <i>Part II</i>, where we need external modules to 
+> complete each project.
+
+
 
 ---
 ## 9.6 Styling Classes
+#### Classes, Instances, Modules
+* Class names should be written in CamelCase. To do this by capitalizing the
+first letter of each word in the name, and don’t use underscores.
+* Instance and module names should be written in lowercase with underscores 
+between words.
+
+#### Docstrings
+* Every class should have a docstring immediately following the class 
+definition. 
+* The docstring should be a brief description of what the class does, and
+you should follow the same formatting conventions you used for writing
+docstrings in functions. Each module should also have a docstring 
+describing what the classes in a module can be used for.
+
+#### Blanks
+* You can use blank lines to organize code, but don’t use them excessively.
+* Within a class you can use one blank line between methods, and within 
+a module you can use two blank lines to separate classes.
+* If you need to import a module from the standard library and a module
+that you wrote, place the import statement for the standard library module
+first.
+* Then add a blank line and the import statement for the module you
+wrote.In programs with multiple import statements, this convention makes
+it easier to see where the different modules used in the program come from.
