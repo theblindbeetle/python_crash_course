@@ -1,0 +1,9 @@
+In Python, you can create lists.
+  In Python, you can create lists of lists.
+  In Python, you can create lists of lists.
+  In Python, you can create lists of dictionaries.
+  In Python, you can create dictionaries of lists.
+  In Python, you can create dictionaries of dictionaries.
+  In Python, you can read files.
+  In Python, you can modify files.
+  In Python, you can analyze content of files.
