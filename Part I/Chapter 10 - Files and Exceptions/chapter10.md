@@ -1,5 +1,3 @@
-from fileinput import filename
-
 # Chapter 10: Files and Exceptions
 ### In this chapter you'll learn to work with files and special objects Python creates to manage errors.
 
