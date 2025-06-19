@@ -311,7 +311,298 @@ Now we know the function works for people with and without middle name.
 
 ---
 ## 11.2 Testing a Class
+It's useful validating a class works correctly. And a pass test for a class
+makes you confident that an improvement won't break the current behavior.
+
 ### 11.2.1 A Variety of Assert Methods
+Python provides assert methods in the `unittest.TestCase` class. Assert
+methods test if a condition is indeed true. If so, no error exist. If not,
+Python raises an exception.
+
+The following table describe six common assert methods that inherits from 
+`unittest.TestCase`:
+
+| Method                  | Use                             |
+|-------------------------|---------------------------------|
+| assertEqual(a, b)       | Verify that a == b              |
+| assertNotEqual(a, b)    | Verify that a != b              |
+| assertTrue(x)           | Verify that x is True           |
+| assertFalse(x)          | Verify that x is False          |
+| assertIn(item, list)    | Verify that item is in list     |
+| assertNotIn(item, list) | Verify that item is not in list |
+
+
+
 ### 11.2.2 A Class to Test
+Testing a class is similar to testing a function. Much of your work
+involves testing the behavior of the methods in the class. Let's write a class
+that administer anonymous surveys:
+```python
+# REFER: ../11.2.../11.2.2.../survey.py
+class AnonymousSurvey:
+    """Collect anonymous answers to a survey question."""
+
+    def __init__(self, question):
+        """Store a question, and prepare to store responses."""
+        self.question = question
+        self.responses = []
+
+    def show_question(self):
+        """Show the survey question."""
+        print(self.question)
+
+    def store_response(self, new_response):
+        """Store a single response to the survey."""
+        self.responses.append(new_response)
+
+    def show_results(self):
+        """Show all the responses that have been given."""
+        print("Survey results:")
+        for response in self.responses:
+            print(f"- {response}")
+```
+Let's see what this code does:
+* The `__init__()` method prepares two elements:
+    * the variable `question` to store the question of the survey.
+    * the list `responses[]` to store the responses.
+* The method `show_question()` prints the question.
+* The method `store_response()` stores the response in the list.
+* The method `show_results()` that print the responses.
+
+Provide a `question` to create an instance of this class. When the 
+instance for a survey is created you can use any of the methods.<br>
+&emsp;To see the class `AnonymousSurvey` working let's create a program
+that uses it:
+```python
+# REFER: ../11.2.../11.2.2.../language_survey.py
+from survey import AnonymousSurvey
+
+# Define a question, and make a survey.
+question = "What language did you first learn to speak?"
+my_survey = AnonymousSurvey(question)
+
+# Show the question, and store responses to the question.
+my_survey.show_question()
+print("Enter 'q' at any time to quit.\n")
+while True:
+    response = input("Language: ")
+    if response == 'q':
+        break
+    my_survey.store_response(response)
+
+# Show the survey results.
+print("\nThank you to everyone who participated in the survey!")
+my_survey.show_results()
+```
+The program do the following actions:
+* Creates a question for the survey.
+* Calls the class `AnonymousSurvey()` to create the object 
+`my_survey`.
+* Uses the object to call the methods from the class:
+  * `show_question()` shows the question of the survey. 
+    * and prints a message to quit the program
+  * Enters to a `while` loop
+  * prompts the user for a language
+  * validates if response is 'q' to quit
+    * if it is breaks the loop.
+  * if the look continues, store the response
+* prints a gratitude message for participate in the survey
+* print the results:
+```commandline
+What language did you first learn to speak?
+Enter 'q' at any time to quit.
+
+Language: English
+Language: Spanish
+Language: English
+Language: Mandarin
+Language: q
+
+Thank you to everyone who participated in the survey!
+Survey results:
+- English
+- Spanish
+- English
+- Mandarin
+```
+The class works. But... what if we want to make some changes like:
+* Allow a user to enter more than one response.
+* write a method to list unique responses and report how many times
+the that response was given (i.e. '3 English', '2 Spanish', '5 Mandarin')
+* Add another class to manage non-anonymous surveys.
+
+Implementing any of these could affect the behavior of the class
+AnonymousSurvey. By allowing a user to enter multiple responses, we may change
+the single response behavior. To ensure its behavior remains, we can write
+tests for the class.
+
 ### 11.2.3 Testing the AnonymousSurvey Class
+We'll write a test to verify a single response is stored properly by using
+the `asserIn()` method. This let us know if the response is in the list
+after it's been stored.
+```python
+# REFER: ../11.2.../11.2.3.../test_survey.py
+import unittest
+from survey import AnonymousSurvey
+
+class TestAnonymousSurvey(unittest.TestCase):
+    """Test for the class AnonymousSurvey."""
+    
+    def test_store_single_response(self):
+        """Test that a single response is stored properly."""
+        question = "What language did you first learn to speak?"
+        my_survey = AnonymousSurvey(question)
+        my_survey.store_response('English')
+        self.assertIn('English', my_survey.responses)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+Let's check this code:
+* we import `unittest` module and the class `AnonymousSurevey`
+* We call our test case `TestAnonymousSurvey` that inherits 
+from `unittest.TestCase`.
+* The method `test_store_single_response` verifies a response to the survey
+is correctly stored in the survey's list of responses. 
+  * > NOTE:<br>As the method's name is descriptive, if it fails we'll know
+  from the method's name shown in the output that there's a problem
+  storing a single response to the survey's responses list.
+  * the `question` variable is created with the question of the survey.
+  * The method creates an instance of the class `my_survey` with `question`.
+  * The method stores a single response `'English'`.
+  * Then, verifies `'English'` is in the survey's list. 
+
+When we run *test_survey.py*, the test passes:
+```commandline
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+```
+This is good, but a survey is only useful if it generates more than one 
+response. Let's add another method to `TestAnonymousSurvey`:
+```python
+# REFER: ../11.2.../11.2.3.../test_survey_2.py
+import unittest
+from survey import AnonymousSurvey
+
+class TestAnonymousSurvey(unittest.TestCase):
+    """Test for the class AnonymousSurvey."""
+    
+    def test_store_single_response(self):
+        --snip--
+    
+    def test_store_three_responses(self):
+        """Test that three individual responses are stored properly."""
+        question = "What language did you first learn to speak?"
+        my_survey = AnonymousSurvey(question)
+        responses = ['English', 'Spanish', 'Mandarin']
+        for response in responses:
+            my_survey.store_response(response)
+        
+        for response in responses:
+            self.assertIn(response, my_survey.responses)
+        
+if __name__ == '__main__':
+    unittest.main()
+```
+Let's check this code:
+* The name of the new method is clear and specific
+`test_store_three_responses`. This method has:
+  * the `question` variable.
+  * the `my_survey` object with the `question` variable
+  * a `responses` list with three elements
+  * a loop to store th responses
+  * a loop to asert all the responses are properly stored in the 
+survey's list.
+
+When we run *test_survey.py*, the tests pass:
+```commandline
+$ python test_survey.py 
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+```
+This works great. But these tests are repetitive. Now, we'll use
+another feature of `unittest` to make them more efficient.
+
 ### 11.2.4 The setUp() Method
+In *test_survey.py*, each test method has an instance  the 
+`AnonymousSurvey` class. Also, new responses in each method.<br>
+The `unittest.TestCase` class has a `setUp()` method that allows you to
+create these objects once then use them in each of your test methods.
+
+When you include a `setUp()` method in a *TestCase* class, python runs that
+method before running each method starting with *test_*. Any objects
+created in the `setUp()` method are available in each test method.
+Let's use `setUp()` to create a survey instance and used it in
+`test_store_single_response()` and `test_store_three_responses()`
+
+```python
+import unittest
+from survey import AnonymousSurvey
+
+class TestAnonymousSurvey(unittest.TestCase):
+    """Tests for the class AnonymousSurvey."""
+
+    def setUp(self):
+        """
+        Create a survey and set of responses for use in all test methods.
+        """
+        question = "What language did you first learn to speak?"
+        self.my_survey = AnonymousSurvey(question)
+        self.responses = ['English', 'Spanish', 'Mandarin']
+
+    def test_store_single_response(self):
+        """Test that a single response is stored properly."""
+        self.my_survey.store_response(self.responses[0])
+        self.assertIn(self.responses[0], self.my_survey.responses)
+
+    def test_store_three_responses(self):
+        """Test that three individual responses are stored proprely."""
+        for response in self.responses:
+            self.my_survey.store_response(response)
+        for response in self.responses:
+            self.assertIn(response, self.my_survey.responses)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+Let's check our code:
+* the `setUp()` method:
+  * creates the `question` variable.
+  * creates a survey instance
+  * creates the list of responses
+  * > notice how the variables `my_survey` and `responses` are prefixed by
+    > `self` so they can be used anywhere in the class.<br>
+    > This simplifies the test methods because they can use the self
+    > variables, instead creating them on each method.
+* the `test_store_single_response()` method verifies the first response in 
+`self.responses` can be stored correctly
+* the `test_store_three_responses()` method verifies all three responses in 
+`self.responses` can be stored correctly
+
+The execution of *test_survey.py* throw a pass for both tests.<br>
+After modifying `AnonymousSurvey` to accept multiple responses for 
+each person, these tests would be useful to verify that single responses
+or series of individual responses are not affected.
+
+* The `setUp()` method can make your test methods easier to write.
+* The instances and attributes from the `setUp()` method can be used
+in all the test methods.
+* This is easier than making a new set of instances and attributes in each
+test method.
+
+> NOTE:<br>
+> When you run a test case, in the first line of output, Python prints 
+> different characters for test a test completed under different situations:
+> * dot (.) - a test pass
+> * *E* - an error in the test
+> * *F* - a test that results in a failed assertion.
+> 
+> If the execution of the test is taking a while, you can take a look at the
+> output and get sense of how many tests are passing.
