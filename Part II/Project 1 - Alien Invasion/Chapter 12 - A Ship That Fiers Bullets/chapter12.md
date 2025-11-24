@@ -293,9 +293,108 @@ background color.
 <br>Figure 12-1: The ship for Alien Invasion
 
 ### 12.4.1 Creating the Ship Class
+We need to display the ship, so we create a new module containing the class
+`Ship` which manages most of the behavior of the player's ship:
+```python
+import pygame
 
+class Ship:
+    """A class to manage the ship."""
+
+    def __init__(self, ai_game):
+        """Initialize the ship and set its starting position."""
+        self.screen = ai_game.screen
+        self.screen_rect = ai_game.screen.get_rect()
+
+        # Load the ship image and get its rect.
+        self.image = pygame.image.load('images/ship.bmp')
+        self.rect = self.image.get_rect()
+
+        # Start each new ship at the bottom center of the screen.
+        self.rect.midbottom = self.screen_rect.midbottom
+
+    def blitme(self):
+        """Draw the ship at its current location."""
+        self.screen.blit(self.image, self.rect)
+```
+Pygame lets you treat all elements like rectangles, even if they are not.
+This approach works well enough that no player would notice that a collision
+of elements with different shapes are handled as rectangles.
+
+Let's describe the code:
+* We import pygame module, and then define the class `Ship`.
+* The `__init__()` method of `Ship` takes two parameters:
+  * the `self` reference
+  * the reference to the current instance of "AlienInvasion" `ai_game`.
+* In the method we assign the screen so we can access easily ot it.
+* The screen's `rect` attribute, through the `get_rect()` method, which assigned
+to `self.screen_rect` places the ship in the correct location on the screen. 
+* To load the image, we call `pygame.image.load()` and give it the location
+of our ship image. This function returns the surface representing the ship,
+which we assign to `self.ship`.
+* Then, we call `get_rect()` to access the ship surface's `rect` attribute so
+we can later use it to place the ship.
+
+When you work with the `rect` object, you can use the x/y coordinates of the 
+top, bottom, left, and right edges of the rectangle, as well as the center, to
+place the object.<br>
+When you center a game element, use `center`, `centerx`, or `centery` attributes
+of `rect`. When you work at an edge, use `top`, `bottom`, `left`, or `right`
+attributes. There are also attributes that combine these properties; `midbottom`
+, `midtop`, `midleft`, and `midright`.<br>
+You can also, just use the `x` and `y` attributes, which are coordinates from
+the top left corner.
+
+> NOTE: In Pygame, the origin (0, 0) is in the top-left corner of the screen,
+and coordinates increase as you go down and to the right. On a 1200 by 800 
+screen, the origin is in the top-left corner, and the bottom-right corner has
+the coordinates (1200, 800). These coordinates refer to the game window, not 
+the physical screen.
+
+The ship will be set at the bottom center of the screen. Let's use the 
+`midbottom` attribute of the screen's `rect`.
+* `rect` is used to position the ship image so it's centered horizontally and
+aligned with the bottom of the screen.
+* The `blitme()` method draws the image to the screen at the position specified
+by `self.rect`.
 
 ### 12.4.2 Drawing the Ship to the Screen
+Now let's update `alien_invasion.py` to create a ship and calls the ship's
+`blitme()` method:
+```python
+# REFER: ../Project 1.../alien_invasion.py
+# REFER: ../12.4.../12.4.2.../aline_invasion.4.py
+--ship--
+from settings import Settings
+from ship import Ship
+
+class AlineInvasion:
+    """Overall class to manage game assets and behavior."""
+
+    def __init__(self):
+        --snip--
+        pygame.display.set_caption("Alien Invasion")
+        
+        self.ship = Ship(self)
+
+    def run_game(self):
+        --snip--
+        # Redraw the screen during each pass through the loop.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+        
+        # Make the most recently draw screen visible.\
+        pygame.display.flip()
+--ship--
+```
+besides of the import we have two new lines:
+* `self.ship = Ship(self)` The call to Ship() requires one argument, an instance
+of AlienInvasion. The `self` argument refers to the instance of `AlienInvasion`,
+giving to `Ship` access to the game's resources. And, `self.ship` is an instance
+of `Ship`.
+* `slef.ship.blitme()` with this, after filling the background we draw the ship
+on the screen by calling the function. So, the ship appears on top of the
+background.
 
 ---
 ## 12.5 Refactoring: The _check_events() and _update_screen() Methods
